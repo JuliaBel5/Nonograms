@@ -1,37 +1,34 @@
-import { cat, heart } from '../model/5x5'
-const { rows: rowClues, cols: colClues } = generateClues(heart)
+import { state } from '../main'
+import { Modal } from '../model/modal'
 
-const container = document.getElementById('nonogram')
+export class Controller {
+  constructor(view, model) {
+    this.view = view
+    this.model = model
+    this.modal = new Modal(this.view.gameArea, this.model)
+    this.model.createKey(this.view.picture)
+    this.view.bindCheckWin(this.checkKey)
 
-// Create the grid
-const grid = heart.forEach((row, i) => {
-  row.forEach((cell, j) => {
-    const div = document.createElement('div')
-    div.id = `cell-${i}-${j}`
-    div.classList.add('cell')
-    // div.style.backgroundColor = cell === 1 ? 'black' : 'white';
-    container.appendChild(div)
+    this.view.newGameButton.addEventListener('click', () => {
+      this.view.renderBoard()
+      this.view.bindCheckWin(this.checkKey)
+      this.modal = new Modal(this.view.gameArea, this.model)
+      state.counter = 0
+      state.blackCount = 0
+      state.isWin = false
+    })
+  }
 
-    // Add event listener here
-    if (cell === 1) {
-      div.addEventListener('click', () => {
-        div.style.backgroundColor =
-          div.style.backgroundColor === 'black' ? 'white' : 'black'
-      })
+  checkKey = () => {
+    if (
+      !state.isWin &&
+      state.counter === this.model.key &&
+      state.counter === state.blackCount
+    ) {
+      console.log('you win')
+      this.view.bindCheckWin(this.checkKey)
+      this.modal.showModal('You win', 'Congrats!')
+      state.isWin = true
     }
-  })
-})
-// Create the clues
-rowClues.forEach((clue, i) => {
-  const div = document.createElement('div')
-  div.textContent = clue.join(', ')
-  div.classList.add('clue')
-  container.appendChild(div)
-})
-
-colClues.forEach((clue, i) => {
-  const div = document.createElement('div')
-  div.textContent = clue.join(', ')
-  div.classList.add('clue')
-  container.appendChild(div)
-})
+  }
+}

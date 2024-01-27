@@ -1,4 +1,6 @@
 @import './styles/grid';
+@import './styles/game';
+@import './styles/modal';
 
 
 * {
@@ -6,10 +8,14 @@
 }
 
 body {
+  display: flex;
+  justify-content: center;
   font-size: 18px;
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-image: url('/pink.jpg');
+  background-size: cover;
 }

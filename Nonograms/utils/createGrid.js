@@ -1,5 +1,7 @@
+import { state } from '../main'
 export function createGrid(game, picture, cellWidth, size) {
   let divider = false
+  const arr = []
 
   picture.forEach((row, i) => {
     row.forEach((cell, j) => {
@@ -21,14 +23,29 @@ export function createGrid(game, picture, cellWidth, size) {
         div.style.borderBottom = '2px solid blue' // Add border to the bottom of the div
       }
 
-      game.appendChild(div)
+      game.append(div)
+      arr.push(div)
 
-      if (cell === 1) {
-        div.addEventListener('click', () => {
-          div.style.backgroundColor =
-            div.style.backgroundColor === 'black' ? 'white' : 'black'
-        })
-      }
+      div.addEventListener('click', () => {
+        div.classList.toggle('marked')
+
+        const isBlack = div.classList.contains('marked')
+
+        state.blackCount = isBlack ? state.blackCount + 1 : state.blackCount - 1
+
+        if (cell === 1) {
+          state.counter = isBlack ? state.counter + 1 : state.counter - 1
+        }
+      })
+
+      div.addEventListener('contextmenu', (e) => {
+        e.preventDefault()
+        if (!div.style.backgroundColor) {
+          div.innerHTML === 'X' ? (div.innerHTML = '') : (div.innerHTML = 'X')
+        }
+      })
     })
   })
+
+  return arr
 }

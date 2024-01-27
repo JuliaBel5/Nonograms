@@ -1,0 +1,39 @@
+.saveButton {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 50px;
+  border: 2px solid pink;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(to right, rgba(255, 182, 193, 0.8), rgba(188, 188, 246, 0.8));
+  transition: background 0.5s ease;
+}
+
+.saveButton:hover {
+  background: linear-gradient(to left, rgba(255, 182, 193, 0.8), rgba(188, 188, 246, 0.8));
+  border: 2px solid rgb(212, 146, 161);
+}
+
+.newGameButton {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 50px;
+  border: 2px solid pink;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(to right, rgba(250, 221, 225, 0.8), rgba(245, 160, 173, 0.8));
+  transition: background 0.5s ease;
+}
+
+.newGameButton:hover {
+  background: linear-gradient(to left, rgba(245, 160, 173, 0.8) rgba(250, 221, 225, 0.8));
+  border: 2px solid rgb(212, 146, 161);
+}

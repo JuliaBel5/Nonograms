@@ -2,9 +2,9 @@
   display: flex;
   flex-wrap: wrap;
   width: 300px;
-  // width: 550px;
-  border: 2px solid violet;
+  border: 2px solid rgb(212, 146, 161);
   box-sizing: content-box;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
 }
 
 .game {
@@ -19,9 +19,6 @@
 .square {
   width: 50px;
   height: 50px;
-  // border-top: 1px solid black;
-  // border-left: 1px solid black;
-  // border-bottom: 1px solid black;
   border: 1px solid black;
 
 }
@@ -30,10 +27,8 @@
   font-size: 14px;
   display: flex;
   width: 250px;
-  //width: 500px;
   height: 50px;
   border-top: 1px solid black;
-  // border-left: 1px solid black;
   border-bottom: 2px solid black;
 
 }
@@ -43,7 +38,6 @@
   flex-direction: column;
   width: 50px;
   height: 250px;
-  // height: 500px;
   font-size: 14px;
   border-left: 1px solid black;
   border-right: 2px solid black;
@@ -80,6 +74,15 @@
 .cell {
   width: 50px;
   height: 50px;
+  text-align: center;
+  color: rgb(212, 146, 161);
+  font-weight: 600;
+  font-size: 2em;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
+}
+
+.cell.marked {
+  background-color: rgb(212, 146, 161);
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
