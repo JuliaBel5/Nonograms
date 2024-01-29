@@ -1,3 +1,12 @@
+.gamearea {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -5,6 +14,19 @@
   border: 2px solid rgb(212, 146, 161);
   box-sizing: content-box;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.buttonContainer {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  border: 2px solid rgb(212, 146, 161);
+  box-sizing: content-box;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 .game {
@@ -20,6 +42,8 @@
   width: 50px;
   height: 50px;
   border: 1px solid black;
+  background-image: url(/cube.png);
+  background-size: cover;
 
 }
 

@@ -4,7 +4,6 @@ export class Modal {
   constructor(section, model) {
     this.overlay = null
     this.section = section
-    this.model = model
     this.modal = null
     this.isShown = false
   }
@@ -30,7 +29,6 @@ export class Modal {
     )
     this.modalButton.addEventListener('click', () => {
       this.remove()
-      // this.model.resetGame()
     })
 
     this.modal.append(this.modalContent)
