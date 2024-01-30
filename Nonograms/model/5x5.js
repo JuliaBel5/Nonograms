@@ -53,5 +53,5 @@ export const level5 = [
   { name: 'watch', value: watch },
   { name: 'sandglass', value: sandglass },
   { name: 'camel', value: camel },
-  { name: ' cock', value: cock },
+  { name: 'cock', value: cock },
 ]

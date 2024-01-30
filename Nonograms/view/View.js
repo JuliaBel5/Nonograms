@@ -5,13 +5,21 @@ import {
   createColumnClues,
 } from '../utils/createClues'
 import { createGrid } from '../utils/createGrid'
-import { level5 } from '../model/5x5'
+import { level5, level10, level15 } from '../model'
 import { state } from '../main'
 import { Modal } from '../model/modal'
 
+const pictures = {
+  5: level5,
+  10: level10,
+  15: level15,
+}
+
 export class View {
   constructor() {
-    this.picture = this.getRandomPicture(level5).value
+    this.randomChoice = this.getRandomPicture(level5)
+    this.picture = this.randomChoice.value
+    this.levelPicture = this.randomChoice.name
     this.coeff = 1
     this.cellWidth = state.cellWidth
     this.size = this.picture.length
@@ -41,7 +49,27 @@ export class View {
       this.sizeSelector.appendChild(optionElement)
     })
 
+    this.pictureSelector = createElement('select', 'pictureSelector')
+    this.pictureSelector.addEventListener('change', (event) => {
+      const picture = pictures[this.size].find(
+        (picture) => picture.name === event.target.value,
+      )
+
+      this.picture = picture.value
+
+      this.renderBoard()
+    })
+
+    pictures[this.size].forEach((option) => {
+      const optionElement = document.createElement('option')
+      optionElement.textContent = option.name
+      optionElement.value = option.name
+      this.pictureSelector.appendChild(optionElement)
+    })
+
+    this.pictureSelector.value = this.levelPicture
     this.sizeSelector.value = '5'
+
     this.buttonContainer.append(
       this.newGameButton,
       this.resetGameButton,
@@ -49,6 +77,7 @@ export class View {
       this.saveButton,
       this.loadButton,
       this.sizeSelector,
+      this.pictureSelector,
     )
     this.gameArea.append(
       this.buttonContainer,
@@ -109,8 +138,8 @@ export class View {
     const squareSize = this.cellWidth * this.coeff
     this.square.style.height = `${squareSize}px`
     this.square.style.width = `${squareSize}px`
-    //square.style.backgroundImage = "url(`../public/${ pictures[this.view.size].name}.png`)";
-    //square.style.backgroundImage = "url('../public/Я-ЕСТЬ-НАЗВАНИЕ.jpg')";
+    //square.style.backgroundImage = "url(`../public/${this.levelPicture}.png`)";
+
     this.gridEl = this.createGrid(
       this.game,
       this.picture,
@@ -181,6 +210,18 @@ export class View {
 
     this.row.style.height = `${squareSize}px`
     this.row.style.width = `${gameSize}px`
+  }
+
+  createPictureSelector = () => {
+    this.pictureSelector.innerHTML = ''
+
+    pictures[this.size].forEach((option) => {
+      const optionElement = document.createElement('option')
+      optionElement.textContent = option.name
+      optionElement.value = option.name
+
+      this.pictureSelector.appendChild(optionElement)
+    })
   }
 
   bindSizeSelector(handler) {

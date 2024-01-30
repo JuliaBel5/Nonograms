@@ -82,5 +82,5 @@ export const level10 = [
   { name: 'teepot', value: teepot },
   { name: 'dog', value: dog },
   { name: 'cat', value: cat },
-  { name: ' cat2', value: cat2 },
+  { name: 'cat2', value: cat2 },
 ]

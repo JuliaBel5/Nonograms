@@ -130,5 +130,5 @@ export const level15 = [
   { name: 'elk', value: elk },
   { name: 'owl', value: owl },
   { name: 'cube', value: cube },
-  { name: ' hamster', value: hamster },
+  { name: 'hamster', value: hamster },
 ]

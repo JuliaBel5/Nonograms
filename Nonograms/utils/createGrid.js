@@ -27,16 +27,12 @@ export function createGrid(game, picture, cellWidth, size) {
       arr.push(div)
 
       div.addEventListener('click', () => {
+        div.classList.remove('crossed')
+        div.innerHTML = ''
         div.classList.toggle('marked')
 
         const isBlack = div.classList.contains('marked')
-
         state.blackCount = isBlack ? state.blackCount + 1 : state.blackCount - 1
-
-        // state.clonedPicture[i][j] = {
-        //   ...state.clonedPicture[i][j],
-        //   isBlack,
-        // }
 
         if (cell === 1) {
           state.counter = isBlack ? state.counter + 1 : state.counter - 1
@@ -45,19 +41,14 @@ export function createGrid(game, picture, cellWidth, size) {
 
       div.addEventListener('contextmenu', (e) => {
         e.preventDefault()
-        if (!div.style.backgroundColor) {
-          div.innerHTML === 'X' ? (div.innerHTML = '') : (div.innerHTML = 'X')
 
+        if (!div.classList.contains('marked')) {
+          div.innerHTML === 'X' ? (div.innerHTML = '') : (div.innerHTML = 'X')
           if (div.innerHTML === 'X') {
             div.classList.add('crossed')
           } else {
             div.classList.remove('crossed')
           }
-
-          // state.clonedPicture[i][j] = {
-          //   ...state.clonedPicture[i][j],
-          //   isMarked: div.innerHTML === 'X',
-          // }
         }
       })
     })
