@@ -1,6 +1,7 @@
 import { state } from '../main'
 import { Modal } from '../model/modal'
 import { level5, level10, level15 } from '../model'
+import { createSolution } from '../utils/createSolution'
 
 const pictures = {
   5: level5,
@@ -16,15 +17,21 @@ export class Controller {
     this.model.createKey(this.view.picture)
     this.view.bindCheckWin(this.checkKey)
     this.view.bindSizeSelector(this.changeSize)
+    this.view.bindResetGame(this.resetGame)
+    this.view.bindShowSolution(this.showSolution)
+    this.view.bindSaveGame(this.saveGame)
+    this.view.bindLoadGame(this.loadGame)
 
     this.view.bindNewGame(() => {
-      this.view.bindCheckWin(this.checkKey)
       this.view.picture = this.view.getRandomPicture(
         pictures[this.view.size],
       ).value
       this.view.renderBoard()
       this.view.resizeBoard(state.cellWidth)
+      this.view.bindCheckWin(this.checkKey)
       this.modal = new Modal(this.view.gameArea, this.model)
+      this.model.key = 0
+      this.model.createKey(this.view.picture)
       state.counter = 0
       state.blackCount = 0
       state.isWin = false
@@ -32,6 +39,7 @@ export class Controller {
   }
 
   checkKey = () => {
+    console.log(state.counter, state.blackCount, this.model.key, state.isWin)
     if (
       !state.isWin &&
       state.counter === this.model.key &&
@@ -50,5 +58,96 @@ export class Controller {
     this.view.picture = this.view.getRandomPicture(pictures[value]).value
     this.view.renderBoard()
     this.view.resizeBoard(state.cellWidth)
+  }
+
+  resetGame = () => {
+    this.view.renderBoard()
+    this.view.resizeBoard(state.cellWidth)
+    this.view.bindCheckWin(this.checkKey)
+  }
+
+  showSolution = () => {
+    this.resetGame()
+    this.view.game.innerHTML = ''
+    createSolution(
+      this.view.game,
+      this.view.picture,
+      state.cellWidth,
+      state.size,
+    )
+  }
+
+  saveGame = () => {
+    const savedGame = Array.from(this.view.game.children)
+    const savedCounter = state.counter
+    localStorage.setItem('counter', JSON.stringify(savedCounter))
+    const savedBlackCount = state.blackCount
+    localStorage.setItem('blackCount', JSON.stringify(savedBlackCount))
+    const savedIsWin = state.isWin
+    localStorage.setItem('isWin', JSON.stringify(savedIsWin))
+
+    const markedCells = savedGame
+      .map((cell, index) => {
+        return cell.classList.contains('marked') ? index : null
+      })
+      .filter(Boolean)
+    localStorage.setItem('markedCells', JSON.stringify(markedCells))
+
+    const crossedCells = savedGame
+      .map((cell, index) => {
+        return cell.classList.contains('crossed') ? index : null
+      })
+      .filter(Boolean)
+    localStorage.setItem('crossedCells', JSON.stringify(crossedCells))
+
+    const savedPicture = this.view.picture
+    console.log(this.view.picture)
+    localStorage.setItem('savedPicture', JSON.stringify(savedPicture))
+  }
+
+  loadGame = () => {
+    const savedPicture = localStorage.getItem('savedPicture')
+
+    if (savedPicture) {
+      this.view.picture = JSON.parse(savedPicture)
+    }
+    this.model.key = 0
+    this.model.createKey(this.view.picture)
+    this.view.renderBoard()
+    this.view.resizeBoard(state.cellWidth)
+    this.view.bindCheckWin(this.checkKey)
+    this.modal = new Modal(this.view.gameArea, this.model)
+    const savedCounter = localStorage.getItem('counter')
+    if (savedCounter) {
+      state.counter = JSON.parse(savedCounter)
+    }
+
+    const savedBlackCount = localStorage.getItem('blackCount')
+    if (savedBlackCount) {
+      state.blackCount = JSON.parse(savedBlackCount)
+    }
+
+    const savedIsWin = localStorage.getItem('isWin')
+    if (savedIsWin) {
+      state.isWin = JSON.parse(savedIsWin)
+    }
+    const savedGame = Array.from(this.view.game.children)
+
+    const savedCrossedCells = localStorage.getItem('crossedCells')
+    const savedMarkedCells = localStorage.getItem('markedCells')
+    if (savedMarkedCells) {
+      const markedCellIndices = JSON.parse(savedMarkedCells)
+      markedCellIndices.forEach((index) => {
+        savedGame[index].classList.add('marked')
+        savedGame[index].textContent = 'X'
+      })
+    }
+    if (savedCrossedCells) {
+      const crossedCellIndices = JSON.parse(savedCrossedCells)
+      crossedCellIndices.forEach((index) => {
+        savedGame[index].classList.add('crossed')
+        savedGame[index].textContent = 'X'
+      })
+    }
   }
 }

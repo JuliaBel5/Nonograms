@@ -13,7 +13,5 @@ export class Model {
     })
   }
 
-  resetGame() {
-    this.isWin = false
-  }
+ 
 }

@@ -6,7 +6,7 @@ export function createGrid(game, picture, cellWidth, size) {
   picture.forEach((row, i) => {
     row.forEach((cell, j) => {
       const div = document.createElement('div')
-      div.id = `cell-${i}-${j}`
+      div.id = `${i}-${j}`
       div.classList.add('cell')
       div.style.width = `${cellWidth}px`
       div.style.height = `${cellWidth}px`
@@ -47,6 +47,12 @@ export function createGrid(game, picture, cellWidth, size) {
         e.preventDefault()
         if (!div.style.backgroundColor) {
           div.innerHTML === 'X' ? (div.innerHTML = '') : (div.innerHTML = 'X')
+
+          if (div.innerHTML === 'X') {
+            div.classList.add('crossed')
+          } else {
+            div.classList.remove('crossed')
+          }
 
           // state.clonedPicture[i][j] = {
           //   ...state.clonedPicture[i][j],

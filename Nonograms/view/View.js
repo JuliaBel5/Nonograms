@@ -27,8 +27,11 @@ export class View {
     this.square = createElement('div', 'square')
     this.container = createElement('div', 'container')
     this.buttonContainer = createElement('div', 'buttonContainer')
-    this.newGameButton = createElement('div', 'newGameButton', 'New game')
+    this.newGameButton = createElement('div', 'newGameButton', 'Random game')
+    this.resetGameButton = createElement('div', 'resetGameButton', 'Reset')
     this.saveButton = createElement('div', 'saveButton', 'Save game')
+    this.loadButton = createElement('div', 'saveButton', 'Load game')
+    this.showSolutionButton = createElement('div', 'saveButton', 'Solution')
 
     this.sizeSelector = createElement('select', 'sizeSelector')
     ;['5', '10', '15'].forEach((option) => {
@@ -41,7 +44,10 @@ export class View {
     this.sizeSelector.value = '5'
     this.buttonContainer.append(
       this.newGameButton,
+      this.resetGameButton,
+      this.showSolutionButton,
       this.saveButton,
+      this.loadButton,
       this.sizeSelector,
     )
     this.gameArea.append(
@@ -180,6 +186,30 @@ export class View {
   bindSizeSelector(handler) {
     this.sizeSelector.addEventListener('change', (event) => {
       handler(event.target.value)
+    })
+  }
+
+  bindResetGame(handler) {
+    this.resetGameButton.addEventListener('click', () => {
+      handler()
+    })
+  }
+
+  bindShowSolution(handler) {
+    this.showSolutionButton.addEventListener('click', () => {
+      handler()
+    })
+  }
+
+  bindSaveGame(handler) {
+    this.saveButton.addEventListener('click', () => {
+      handler()
+    })
+  }
+
+  bindLoadGame(handler) {
+    this.loadButton.addEventListener('click', () => {
+      handler()
     })
   }
 }
