@@ -42,10 +42,11 @@ export class View {
     this.showSolutionButton = createElement('div', 'saveButton', 'Solution')
 
     this.sizeSelector = createElement('select', 'sizeSelector')
-    ;['5', '10', '15'].forEach((option) => {
+    ;['5x5', '10x10', '15x15'].forEach((option, index) => {
       const optionElement = document.createElement('option')
       optionElement.textContent = option
-      optionElement.value = option
+      optionElement.value = 5 * (index + 1)
+      console.log(option[0])
       this.sizeSelector.appendChild(optionElement)
     })
 
@@ -68,7 +69,7 @@ export class View {
     })
 
     this.pictureSelector.value = this.levelPicture
-    this.sizeSelector.value = '5'
+    this.sizeSelector.value = 5
 
     this.buttonContainer.append(
       this.newGameButton,
@@ -227,6 +228,13 @@ export class View {
   bindSizeSelector(handler) {
     this.sizeSelector.addEventListener('change', (event) => {
       handler(event.target.value)
+      console.log(2, event.target.value)
+    })
+  }
+
+  bindPictureSelector(handler) {
+    this.pictureSelector.addEventListener('change', (event) => {
+      handler(event.target.value)
     })
   }
 
@@ -252,5 +260,9 @@ export class View {
     this.loadButton.addEventListener('click', () => {
       handler()
     })
+  }
+
+  bindSelectNewPicture(handler) {
+    handler()
   }
 }

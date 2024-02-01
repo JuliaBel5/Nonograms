@@ -14,7 +14,7 @@ export const heart = [
   [0, 0, 1, 0, 0],
 ]
 
-export const sandglass = [
+export const watch = [
   [0, 1, 1, 1, 0],
   [1, 0, 1, 0, 1],
   [1, 0, 1, 1, 1],
@@ -22,7 +22,7 @@ export const sandglass = [
   [0, 1, 1, 1, 0],
 ]
 
-export const watch = [
+export const sandglass = [
   [1, 1, 1, 1, 1],
   [0, 1, 1, 1, 0],
   [0, 0, 1, 0, 0],
