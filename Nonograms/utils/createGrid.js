@@ -1,4 +1,11 @@
 import { state } from '../main'
+import { Music } from './Music'
+
+const audio = new Music()
+const blackCell = `black.wav`
+const crossedCell = 'crossed.wav'
+const whiteCell = 'white2.wav'
+
 export function createGrid(game, picture, cellWidth, size) {
   let divider = false
   const arr = []
@@ -33,6 +40,7 @@ export function createGrid(game, picture, cellWidth, size) {
 
         const isBlack = div.classList.contains('marked')
         state.blackCount = isBlack ? state.blackCount + 1 : state.blackCount - 1
+        isBlack ? audio.play(blackCell) : audio.play(whiteCell)
 
         if (cell === 1) {
           state.counter = isBlack ? state.counter + 1 : state.counter - 1
@@ -46,8 +54,10 @@ export function createGrid(game, picture, cellWidth, size) {
           div.innerHTML === 'X' ? (div.innerHTML = '') : (div.innerHTML = 'X')
           if (div.innerHTML === 'X') {
             div.classList.add('crossed')
+            audio.play(crossedCell)
           } else {
             div.classList.remove('crossed')
+            audio.play(whiteCell)
           }
         }
       })

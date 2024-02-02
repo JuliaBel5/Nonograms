@@ -3,12 +3,22 @@ import { Modal } from '../model/modal'
 import { level5, level10, level15 } from '../model'
 import { createSolution } from '../utils/createSolution'
 import { LocalStorage } from '../Storage/localStorage'
+import { Music } from '../utils/Music'
+import { LastGames } from '../model/LastGames'
 
 const pictures = {
   5: level5,
   10: level10,
   15: level15,
 }
+const win = 'win.wav'
+const save = 'save.wav'
+const load = 'load.mp3'
+const solution = 'solution.wav'
+const size = 'size.wav'
+const picture = 'picture.wav'
+const reset = 'reset.wav'
+const random = 'random.wav'
 
 export class Controller {
   constructor(view, model) {
@@ -16,6 +26,9 @@ export class Controller {
     this.model = model
     this.localStorage = new LocalStorage()
     this.modal = new Modal(this.view.gameArea, this.model)
+    this.audio = new Music()
+    this.isMuted = false
+    this.table = new LastGames(this.view.gameArea)
     this.model.createKey(this.view.picture)
     this.view.bindCheckWin(this.checkKey)
     this.view.bindSizeSelector(this.changeSize)
@@ -23,8 +36,10 @@ export class Controller {
     this.view.bindShowSolution(this.showSolution)
     this.view.bindSaveGame(this.saveGame)
     this.view.bindLoadGame(this.loadGame)
-    this.view.bindPictureSelector(this.stateReset)
+    this.view.bindPictureSelector(this.changePicture)
+    this.view.bindScoresButton(this.scoresTable)
     this.view.bindNewGame(() => {
+      this.audio.play(random)
       this.view.size = this.getRandomLevel([5, 10, 15])
 
       this.view.createPictureSelector()
@@ -40,7 +55,9 @@ export class Controller {
   }
 
   checkKey = () => {
-    console.log(state.counter, state.blackCount, this.model.key, state.isWin)
+    if (!this.view.timer.intervalId) {
+      this.view.timer.start()
+    }
 
     if (
       !state.isWin &&
@@ -48,6 +65,14 @@ export class Controller {
       state.counter === state.blackCount
     ) {
       console.log('you win')
+      this.result = [
+        this.view.levelPicture,
+        this.view.size,
+        this.view.timer.timer,
+      ]
+      this.table.addItem(this.result)
+      this.audio.play(win)
+      this.view.timer.stop()
       this.view.bindCheckWin(this.checkKey)
       this.modal.showModal('You win', 'Congrats!')
       state.isWin = true
@@ -55,7 +80,9 @@ export class Controller {
   }
 
   changeSize = (value) => {
+    this.audio.play(size)
     console.log(typeof value, Number(value))
+
     this.view.size = Number(value)
     this.view.cellWidth = state.cellWidth
     this.view.randomChoice = this.view.getRandomPicture(
@@ -69,6 +96,11 @@ export class Controller {
     this.stateReset()
   }
 
+  changePicture = () => {
+    this.audio.play(picture)
+    this.stateReset()
+  }
+
   stateReset = () => {
     this.view.resizeBoard(state.cellWidth)
     this.modal = new Modal(this.view.gameArea, this.model)
@@ -78,16 +110,20 @@ export class Controller {
     state.blackCount = 0
     state.isWin = false
     this.view.bindCheckWin(this.checkKey)
+    this.view.timer.reset()
   }
 
   resetGame = () => {
+    this.audio.play(reset)
     this.view.renderBoard()
     this.stateReset()
   }
 
   showSolution = () => {
+    this.audio.play(solution)
     console.log(this.view.size === 15)
-    this.resetGame()
+    this.view.renderBoard()
+    this.stateReset()
 
     this.view.game.innerHTML = ''
     createSolution(
@@ -100,12 +136,15 @@ export class Controller {
   }
 
   saveGame = () => {
+    this.audio.play(save)
     const savedGame = Array.from(this.view.game.children)
 
     this.localStorage.setItem('counter', state.counter)
     this.localStorage.setItem('blackCount', state.blackCount)
     this.localStorage.setItem('isWin', state.isWin)
     this.localStorage.setItem('size', this.view.size)
+    this.view.timer.stop()
+    this.view.timer.saveToLocalStorage()
     const markedCells = savedGame
       .map((cell, index) => {
         return cell.classList.contains('marked') ? `${index}` : null
@@ -127,6 +166,7 @@ export class Controller {
   }
 
   loadGame = () => {
+    this.audio.play(load)
     const savedPicture = this.localStorage.getItem('savedPicture')
 
     if (savedPicture) {
@@ -145,7 +185,8 @@ export class Controller {
     if (savedPictureName) {
       this.view.pictureSelector.value = savedPictureName
     }
-    this.resetGame()
+    this.view.renderBoard()
+    this.stateReset()
     const savedCounter = this.localStorage.getItem('counter')
     if (savedCounter) {
       state.counter = savedCounter
@@ -178,10 +219,16 @@ export class Controller {
         savedGame[index].textContent = 'X'
       })
     }
+    this.view.timer.reset()
+    this.view.timer.getSavedTimer()
   }
 
   getRandomLevel(levels) {
     const index = Math.floor(Math.random() * levels.length)
     return levels[index]
+  }
+
+  scoresTable = () => {
+    this.table.showTable()
   }
 }

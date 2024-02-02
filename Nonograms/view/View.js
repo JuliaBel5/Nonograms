@@ -7,7 +7,7 @@ import {
 import { createGrid } from '../utils/createGrid'
 import { level5, level10, level15 } from '../model'
 import { state } from '../main'
-import { Modal } from '../model/modal'
+import { Timer } from '../utils/Timer'
 
 const pictures = {
   5: level5,
@@ -25,7 +25,7 @@ export class View {
     this.size = this.picture.length
     this.init()
     this.gridEl = []
-    //this.startTime = null
+    this.timer = new Timer(this.timerWindow)
   }
 
   init() {
@@ -40,7 +40,8 @@ export class View {
     this.saveButton = createElement('div', 'saveButton', 'Save game')
     this.loadButton = createElement('div', 'saveButton', 'Load game')
     this.showSolutionButton = createElement('div', 'saveButton', 'Solution')
-
+    this.timerWindow = createElement('div', 'timer', '00:00')
+    this.scoresButton = createElement('div', 'saveButton', 'Scores')
     this.sizeSelector = createElement('select', 'sizeSelector')
     ;['5x5', '10x10', '15x15'].forEach((option, index) => {
       const optionElement = document.createElement('option')
@@ -57,7 +58,7 @@ export class View {
       )
 
       this.picture = picture.value
-
+      this.levelPicture = picture.name
       this.renderBoard()
     })
 
@@ -75,8 +76,10 @@ export class View {
       this.newGameButton,
       this.resetGameButton,
       this.showSolutionButton,
+      this.timerWindow,
       this.saveButton,
       this.loadButton,
+      this.scoresButton,
       this.sizeSelector,
       this.pictureSelector,
     )
@@ -264,5 +267,11 @@ export class View {
 
   bindSelectNewPicture(handler) {
     handler()
+  }
+
+  bindScoresButton(handler) {
+    this.scoresButton.addEventListener('click', () => {
+      handler()
+    })
   }
 }
