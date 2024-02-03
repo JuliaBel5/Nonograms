@@ -33,30 +33,62 @@ export class View {
     document.body.append(this.gameArea)
     this.game = createElement('div', 'game')
     this.square = createElement('div', 'square')
-    this.container = createElement('div', 'container')
-    this.buttonContainer = createElement('div', 'buttonContainer')
-    this.newGameButton = createElement('div', 'newGameButton', 'Random game')
-    this.resetGameButton = createElement('div', 'resetGameButton', 'Reset')
-    this.saveButton = createElement('div', 'saveButton', 'Save game')
-    this.loadButton = createElement('div', 'saveButton', 'Load game')
-    this.showSolutionButton = createElement('div', 'saveButton', 'Solution')
-    this.timerWindow = createElement('div', 'timer', '00:00')
-    this.scoresButton = createElement('div', 'saveButton', 'Scores')
+    this.container = createElement('div', `container${state.theme}`)
+    this.buttonContainer = createElement('div', `buttonContainer${state.theme}`)
+    this.iconsWrapper = createElement('div', 'iconsWrapper')
+    this.buttonsWrapper = createElement('div', 'iconsWrapper')
+    this.saveButtonsWrapper = createElement('div', 'iconsWrapper')
+    this.solutionsButtonsWrapper = createElement('div', 'iconsWrapper')
+    this.selectsWrapper = createElement('div', 'iconsWrapper')
+    this.newGameButton = createElement(
+      'div',
+      `firstButton${state.theme}`,
+      'Random game',
+    )
+    this.resetGameButton = createElement(
+      'div',
+      `secondButton${state.theme}`,
+      'Reset',
+    )
+    this.saveButton = createElement(
+      'div',
+      `secondButton${state.theme}`,
+      'Save game',
+    )
+    this.loadButton = createElement(
+      'div',
+      `firstButton${state.theme}`,
+      'Load game',
+    )
+    this.showSolutionButton = createElement(
+      'div',
+      `firstButton${state.theme}`,
+      'Solution',
+    )
+    this.timerWindow = createElement('div', `timer${state.theme}`, '00:00')
+    this.scoresButton = createElement(
+      'div',
+      `secondButton${state.theme}`,
+      'Scores',
+    )
     this.scoresButton.classList.add('scoresButton')
     this.muteButton = createElement('div', 'muteButton')
-
-    this.sizeSelector = createElement('select', 'sizeSelector')
+    this.themeButton = createElement('div', `themeButton${state.theme}`)
+    this.sizeSelector = createElement('select', `sizeSelector${state.theme}`)
     this.sizeSelector.id = 'sel1'
     ;['5x5', '10x10', '15x15'].forEach((option, index) => {
       const optionElement = document.createElement('option')
       optionElement.textContent = option
-      optionElement.classList.add(`option${index + 2}`)
+      optionElement.classList.add(`option${index + 2}${state.theme}`)
       optionElement.value = 5 * (index + 1)
 
       this.sizeSelector.appendChild(optionElement)
     })
 
-    this.pictureSelector = createElement('select', 'pictureSelector')
+    this.pictureSelector = createElement(
+      'select',
+      `pictureSelector${state.theme}`,
+    )
     this.pictureSelector.addEventListener('change', (event) => {
       const picture = pictures[this.size].find(
         (picture) => picture.name === event.target.value,
@@ -69,7 +101,7 @@ export class View {
 
     pictures[this.size].forEach((option, index) => {
       const optionElement = document.createElement('option')
-      optionElement.classList.add(`option${index}`)
+      optionElement.classList.add(`option${index + 1}${state.theme}`)
       optionElement.textContent = option.name
       optionElement.value = option.name
       this.pictureSelector.appendChild(optionElement)
@@ -77,18 +109,21 @@ export class View {
 
     this.pictureSelector.value = this.levelPicture
     this.sizeSelector.value = 5
-
-    this.buttonContainer.append(
-      this.muteButton,
-      this.newGameButton,
-      this.resetGameButton,
+    this.iconsWrapper.append(this.themeButton, this.muteButton)
+    this.buttonsWrapper.append(this.newGameButton, this.resetGameButton)
+    this.saveButtonsWrapper.append(this.saveButton, this.loadButton)
+    this.solutionsButtonsWrapper.append(
       this.showSolutionButton,
-      this.timerWindow,
-      this.saveButton,
-      this.loadButton,
       this.scoresButton,
-      this.sizeSelector,
-      this.pictureSelector,
+    )
+    this.selectsWrapper.append(this.sizeSelector, this.pictureSelector)
+    this.buttonContainer.append(
+      this.iconsWrapper,
+      this.buttonsWrapper,
+      this.saveButtonsWrapper,
+      this.timerWindow,
+      this.solutionsButtonsWrapper,
+      this.selectsWrapper,
     )
     this.gameArea.append(this.container, this.buttonContainer)
     this.renderBoard()
@@ -131,8 +166,6 @@ export class View {
     this.gridEl = []
     this.container.innerHTML = ''
 
-    console.log('это релоад', this.size, this.cellWidth)
-
     this.game = createElement('div', 'game')
     this.square = createElement('div', 'square')
     const gameSize = this.cellWidth * this.size
@@ -146,7 +179,6 @@ export class View {
     this.square.style.height = `${squareSize}px`
     this.square.style.width = `${squareSize}px`
     this.square.style.backgroundImage = `url(${this.levelPicture}.png)`
-    console.log(this.square.style.backgroundImage)
 
     this.gridEl = this.createGrid(
       this.game,
@@ -187,8 +219,6 @@ export class View {
     if (this.size === 15) {
       cellWidth *= 0.83
     }
-
-    console.log('это ресайз', this.size, cellWidth)
 
     Array.from(this.game.children).forEach((el) => {
       el.style.height = `${cellWidth}px`
@@ -236,7 +266,6 @@ export class View {
   bindSizeSelector(handler) {
     this.sizeSelector.addEventListener('change', (event) => {
       handler(event.target.value)
-      console.log(2, event.target.value)
     })
   }
 
@@ -244,6 +273,10 @@ export class View {
     this.pictureSelector.addEventListener('change', (event) => {
       handler(event.target.value)
     })
+  }
+
+  bindSelectNewPicture(handler) {
+    handler()
   }
 
   bindResetGame(handler) {
@@ -257,21 +290,15 @@ export class View {
       handler()
     })
   }
-
   bindSaveGame(handler) {
     this.saveButton.addEventListener('click', () => {
       handler()
     })
   }
-
   bindLoadGame(handler) {
     this.loadButton.addEventListener('click', () => {
       handler()
     })
-  }
-
-  bindSelectNewPicture(handler) {
-    handler()
   }
 
   bindScoresButton(handler) {
@@ -282,6 +309,12 @@ export class View {
 
   bindMuteButton(handler) {
     this.muteButton.addEventListener('click', () => {
+      handler()
+    })
+  }
+
+  bindThemeButton(handler) {
+    this.themeButton.addEventListener('click', () => {
       handler()
     })
   }

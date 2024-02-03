@@ -34,11 +34,11 @@ export function createGrid(game, picture, cellWidth, size) {
       arr.push(div)
 
       div.addEventListener('click', () => {
-        div.classList.remove('crossed')
+        div.classList.remove(`crossed${state.theme}`)
         div.innerHTML = ''
-        div.classList.toggle('marked')
+        div.classList.toggle(`marked${state.theme}`)
 
-        const isBlack = div.classList.contains('marked')
+        const isBlack = div.classList.contains(`marked${state.theme}`)
         state.blackCount = isBlack ? state.blackCount + 1 : state.blackCount - 1
         isBlack ? audio.play(blackCell) : audio.play(whiteCell)
 
@@ -50,13 +50,13 @@ export function createGrid(game, picture, cellWidth, size) {
       div.addEventListener('contextmenu', (e) => {
         e.preventDefault()
 
-        if (!div.classList.contains('marked')) {
+        if (!div.classList.contains(`marked${state.theme}`)) {
           div.innerHTML === 'X' ? (div.innerHTML = '') : (div.innerHTML = 'X')
           if (div.innerHTML === 'X') {
-            div.classList.add('crossed')
+            div.classList.add(`crossed${state.theme}`)
             audio.play(crossedCell)
           } else {
-            div.classList.remove('crossed')
+            div.classList.remove(`crossed${state.theme}`)
             audio.play(whiteCell)
           }
         }

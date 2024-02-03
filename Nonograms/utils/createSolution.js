@@ -9,7 +9,7 @@ export function createSolution(game, picture, cellWidth, size) {
     row.forEach((cell, j) => {
       const div = createElement('div', 'cell')
       if (cell === 1) {
-        div.classList.add('marked')
+        div.classList.add(`marked${state.theme}`)
       }
       div.style.width = `${cellWidth}px`
       div.style.height = `${cellWidth}px`

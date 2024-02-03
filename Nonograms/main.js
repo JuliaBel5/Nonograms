@@ -19,6 +19,8 @@ export const state = {
   counter: 0,
   blackCount: 0,
   isWin: false,
+  theme: 0,
+  saveKey: 2,
 }
 
 const view = new View()

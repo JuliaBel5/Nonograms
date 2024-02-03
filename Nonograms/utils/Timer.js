@@ -24,11 +24,12 @@ export class Timer {
     this.intervalId = null
   }
 
-  saveToLocalStorage() {
-    localStorage.setItem('timer', this.timer)
+  saveToLocalStorage(key) {
+    localStorage.setItem(`${key}timer`, this.timer)
   }
-  getSavedTimer() {
-    this.timer = +localStorage.getItem('timer')
+
+  getSavedTimer(key) {
+    this.timer = +localStorage.getItem(`${key}timer`)
     this.print()
   }
 

@@ -1,79 +1,58 @@
  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&display=swap');
  @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+ @import './mixins';
+ @import './variables';
 
  a:hover {
    background-color: rgba(188, 188, 246, 0.8);
  }
 
- .saveButton {
-   margin-bottom: 10px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   width: 100px;
-   height: 50px;
-   border: 2px solid pink;
-   text-align: center;
-   border-radius: 10px;
-   cursor: pointer;
-   background: linear-gradient(to right, rgba(255, 182, 193, 0.8), rgba(188, 188, 246, 0.8));
-   transition: background 0.5s ease;
+ .saveButton0 {
+   @include pinkButton;
  }
 
- .saveButton:hover {
-   background: linear-gradient(to left, rgba(255, 182, 193, 0.8), rgba(188, 188, 246, 0.8));
-   border: 2px solid rgb(212, 146, 161);
+ .saveButton1 {
+   @include blueButton
  }
 
- .newGameButton {
-   margin-bottom: 10px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   width: 100px;
-   height: 50px;
-   border: 2px solid pink;
-   text-align: center;
-   border-radius: 10px;
-   cursor: pointer;
-   background: linear-gradient(to right, rgba(250, 221, 225, 0.8), rgba(245, 160, 173, 0.8));
-   transition: background 0.5s ease;
+ .firstButton0 {
+   @include pinkButton;
  }
 
- .newGameButton:hover {
-   background: linear-gradient(to left, rgba(245, 160, 173, 0.8) rgba(250, 221, 225, 0.8));
-   border: 2px solid rgb(212, 146, 161);
+ .firstButton1 {
+   @include blueButton;
  }
 
 
- .resetGameButton {
-   margin-bottom: 10px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   width: 100px;
-   height: 50px;
-   border: 2px solid pink;
-   text-align: center;
-   border-radius: 10px;
-   cursor: pointer;
-   background: linear-gradient(to left, rgba(250, 221, 225, 0.8), rgba(245, 160, 173, 0.8));
-   transition: background 0.5s ease;
+ .secondButton0 {
+   @include invertedPinkButton
  }
 
- .resetGameButton:hover {
-   background: linear-gradient(to right, rgba(245, 160, 173, 0.8) rgba(250, 221, 225, 0.8));
-   border: 2px solid rgb(212, 146, 161);
+ .secondButton1 {
+   @include invertedBlueButton;
  }
 
- .timer {
+ .timer0 {
    font-family: 'Orbitron', sans-serif;
    width: 115px;
    text-align: center;
    font-size: 32px;
    font-weight: 400;
-   color: rgba(102, 102, 189, 0.8)
+   color: $pinkColor;
  }
+
+
+ .timer1 {
+   font-family: 'Orbitron', sans-serif;
+   width: 115px;
+   text-align: center;
+   font-size: 32px;
+   font-weight: 400;
+   color: $blueColor;
+ }
+
+
+
 
  .scoresButton {
    width: 80px;
@@ -87,7 +66,6 @@
    align-items: center;
    width: 50px;
    height: 50px;
-   border: 2px solid pink;
    text-align: center;
    border-radius: 10px;
    cursor: pointer;
@@ -107,37 +85,76 @@
    background-size: cover;
  }
 
- .sizeSelector,
- .pictureSelector {
-   font-family: 'Lobster', sans-serif;
-   font-weight: 300;
-   border-radius: 5px;
-   width: 70px;
-   background-color: rgba(250, 221, 225, 0.8);
-   padding-left: 2px;
+ .themeButton0 {
+   margin-bottom: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 50px;
+   height: 50px;
+   border: 2px solid pink;
+   text-align: center;
+   border-radius: 10px;
+   cursor: pointer;
+   background: url('snow.png');
+   background-size: cover;
+   transition: all 0.5s ease;
  }
 
 
+ .themeButton0:hover {
 
- .pictureSelector {
+   border: 2px solid rgb(212, 146, 161);
+
+ }
+
+ .themeButton1 {
+   margin-bottom: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 50px;
+   height: 50px;
+   border: 2px solid rgb(164, 159, 217);
+   text-align: center;
+   border-radius: 10px;
+   cursor: pointer;
+   transition: all 0.5s ease;
+   background: url('spring.png');
+   background-size: cover;
+ }
+
+ .themeButton1:hover {
+
+   border: 2px solid rgb(133, 125, 221);
+
+ }
+
+ .sizeSelector0,
+ .pictureSelector0 {
+   @include pinkSelector
+ }
+
+ .sizeSelector1,
+ .pictureSelector1 {
+   @include blueSelector
+ }
+
+
+ .pictureSelector0,
+ .pictureSelector1 {
    width: 100px;
  }
 
- .option1 {
-
-   background-color: rgba(252, 215, 221, 0.8);
- }
-
-
-
  #sel1 select option:hover {
    background-color: rgba(188, 188, 246, 0.8);
-
+   border: 2px solid rgb(185, 112, 129);
    color: #fff;
  }
 
  select option:checked {
    background-color: rgba(188, 188, 246, 0.8);
+   border: 2px solid rgb(185, 112, 129);
    color: #fff;
  }
 
@@ -146,22 +163,53 @@
    color: #fff;
  }
 
- .option2 {
+
+ .option10 {
+
+   background-color: rgba(252, 215, 221, 0.8);
+ }
+
+ .option20 {
    background-color: rgba(248, 219, 223, 0.8);
  }
 
- .option3 {
+ .option30 {
    background-color: rgba(252, 196, 205, 0.8);
  }
 
- .option4 {
+ .option40 {
    background-color: rgba(255, 198, 207, 0.8);
  }
 
- .option5 {
+ .option50 {
    background-color: rgba(252, 180, 190, 0.8);
  }
 
- .option6 {
+ .option60 {
    background-color: rgba(252, 175, 190, 0.8);
+ }
+
+ .option11 {
+
+   background-color: rgba(202, 227, 242, 0.8);
+ }
+
+ .option21 {
+   background-color: rgba(200, 220, 243, 0.80);
+ }
+
+ .option31 {
+   background-color: rgba(198, 210, 244, 0.80);
+ }
+
+ .option41 {
+   background-color: rgba(196, 200, 244, 0.80);
+ }
+
+ .option51 {
+   background-color: rgba(192, 190, 245, 0.80);
+ }
+
+ .option61 {
+   background-color: rgba(188, 188, 246, 0.8);
  }

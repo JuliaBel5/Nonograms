@@ -1,5 +1,6 @@
 import { Music } from '../utils/Music'
 import { createElement } from '../utils/createElement'
+import { state } from '../main'
 const button = 'button.mp3'
 export class LastGames {
   constructor(section) {
@@ -14,13 +15,13 @@ export class LastGames {
     this.overlay = createElement('div', 'overlay')
     this.overlay.addEventListener('click', () => {})
 
-    this.table = createElement('div', 'modal')
+    this.table = createElement('div', `modal${state.theme}`)
     this.tableContent = createElement('div', 'modal-content')
     this.title = createElement('div', 'title', 'Last 5 Games:')
     this.gameTable = createElement('table', 'table')
     this.tableButton = createElement(
       'button',
-      'modal-button',
+      `modal-button${state.theme}`,
       'Return to the game',
     )
     this.tableButton.addEventListener('click', () => {
@@ -33,14 +34,11 @@ export class LastGames {
   }
 
   addItem(item) {
-    console.log('item', item, 'list1', this.list)
     this.list.push(item)
     if (this.list.length === 5) {
       this.list.shift()
     }
-    console.log('list2', this.list)
     this.list.sort((a, b) => a[2] - b[2])
-    console.log('list3', this.list)
     this.save()
   }
 
@@ -74,7 +72,7 @@ export class LastGames {
 
       difficultyLevelCell.textContent = `${this.list[i][1]}x${this.list[i][1]}`
 
-      timeCell.textContent = this.list[i][2]
+      timeCell.textContent = `${this.list[i][2]} sec`
     }
   }
 

@@ -9,7 +9,7 @@
 
 
 
-.container {
+.container0 {
   display: flex;
   flex-wrap: wrap;
   width: 300px;
@@ -19,7 +19,25 @@
 
 }
 
-.buttonContainer {
+.container1 {
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+  border: 2px solid rgb(164, 159, 217);
+  box-sizing: content-box;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.iconsWrapper {
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttonContainer0 {
+  margin-top: 5px;
   margin-bottom: 5px;
   display: flex;
   flex-direction: column;
@@ -27,32 +45,65 @@
   justify-content: center;
   align-items: center;
   width: fit-content;
-  padding: 5px;
+  padding: 10px;
   border: 2px solid rgb(212, 146, 161);
   box-sizing: content-box;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
 
-@media screen and (max-width: 790px) {
+.buttonContainer1 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 10px;
+  border: 2px solid rgb(164, 159, 217);
+  box-sizing: content-box;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 1040px) {
   .gamearea {
     flex-direction: column;
   }
 
-  .container {
+  .container0,
+  .container1 {
     order: 2;
   }
 
-  .buttonContainer {
+  .buttonContainer0,
+  .buttonContainer1 {
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
+    padding: 5px;
     margin-left: 5px;
     margin-right: 5px;
-    max-width: 500px;
+    max-width: 590px;
     order: 1;
   }
 }
+
+
+
+@media screen and (max-width: 600px) {
+
+
+  .buttonContainer0,
+  .buttonContainer1 {
+
+    max-width: 500px;
+
+  }
+}
+
 
 .game {
   display: flex;
@@ -131,7 +182,17 @@
   border-bottom: 1px solid black;
 }
 
-.cell.marked {
+.cell.marked0 {
   background-color: rgb(212, 146, 161);
   box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.cell.marked1 {
+  background-color: rgb(134, 182, 232);
+  color: rgb(134, 182, 232);
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.cell.crossed1 {
+  color: rgb(95, 163, 236);
 }

@@ -1,5 +1,6 @@
 import { createElement } from '../utils/createElement'
 import { Music } from '../utils/Music'
+import { state } from '../main'
 const button = 'button.mp3'
 export class Modal {
   constructor(section, model) {
@@ -20,13 +21,13 @@ export class Modal {
     this.overlay = createElement('div', 'overlay')
     this.overlay.addEventListener('click', () => {})
     this.section.append(this.overlay)
-    this.modal = createElement('div', 'modal')
+    this.modal = createElement('div', `modal${state.theme}`)
     this.modalContent = createElement('div', 'modal-content')
     this.title = createElement('div', 'title', title)
     this.message = createElement('div', 'message', message)
     this.modalButton = createElement(
       'button',
-      'modal-button',
+      `modal-button${state.theme}`,
       'Return to the game',
     )
     this.modalButton.addEventListener('click', () => {

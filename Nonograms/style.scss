@@ -1,6 +1,8 @@
 @import './styles/grid';
 @import './styles/game';
 @import './styles/modal';
+@import './styles/mixins';
+@import './styles/variables';
 
 * {
   box-sizing: border-box;
@@ -16,6 +18,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-image: url('/pink.jpg');
-  // background-image: url('/background33.jpg');
   background-size: cover;
+}
+
+body.active {
+  background-image: url('/blue.jpg');
 }
