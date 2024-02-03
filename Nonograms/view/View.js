@@ -42,12 +42,17 @@ export class View {
     this.showSolutionButton = createElement('div', 'saveButton', 'Solution')
     this.timerWindow = createElement('div', 'timer', '00:00')
     this.scoresButton = createElement('div', 'saveButton', 'Scores')
+    this.scoresButton.classList.add('scoresButton')
+    this.muteButton = createElement('div', 'muteButton')
+
     this.sizeSelector = createElement('select', 'sizeSelector')
+    this.sizeSelector.id = 'sel1'
     ;['5x5', '10x10', '15x15'].forEach((option, index) => {
       const optionElement = document.createElement('option')
       optionElement.textContent = option
+      optionElement.classList.add(`option${index + 2}`)
       optionElement.value = 5 * (index + 1)
-      console.log(option[0])
+
       this.sizeSelector.appendChild(optionElement)
     })
 
@@ -62,8 +67,9 @@ export class View {
       this.renderBoard()
     })
 
-    pictures[this.size].forEach((option) => {
+    pictures[this.size].forEach((option, index) => {
       const optionElement = document.createElement('option')
+      optionElement.classList.add(`option${index}`)
       optionElement.textContent = option.name
       optionElement.value = option.name
       this.pictureSelector.appendChild(optionElement)
@@ -73,6 +79,7 @@ export class View {
     this.sizeSelector.value = 5
 
     this.buttonContainer.append(
+      this.muteButton,
       this.newGameButton,
       this.resetGameButton,
       this.showSolutionButton,
@@ -83,11 +90,7 @@ export class View {
       this.sizeSelector,
       this.pictureSelector,
     )
-    this.gameArea.append(
-      this.buttonContainer,
-
-      this.container,
-    )
+    this.gameArea.append(this.container, this.buttonContainer)
     this.renderBoard()
   }
 
@@ -142,7 +145,8 @@ export class View {
     const squareSize = this.cellWidth * this.coeff
     this.square.style.height = `${squareSize}px`
     this.square.style.width = `${squareSize}px`
-    //square.style.backgroundImage = "url(`../public/${this.levelPicture}.png`)";
+    this.square.style.backgroundImage = `url(${this.levelPicture}.png)`
+    console.log(this.square.style.backgroundImage)
 
     this.gridEl = this.createGrid(
       this.game,
@@ -181,7 +185,7 @@ export class View {
     }
 
     if (this.size === 15) {
-      cellWidth *= 0.85
+      cellWidth *= 0.83
     }
 
     console.log('это ресайз', this.size, cellWidth)
@@ -219,8 +223,9 @@ export class View {
   createPictureSelector = () => {
     this.pictureSelector.innerHTML = ''
 
-    pictures[this.size].forEach((option) => {
+    pictures[this.size].forEach((option, index) => {
       const optionElement = document.createElement('option')
+      optionElement.classList.add(`option${index}`)
       optionElement.textContent = option.name
       optionElement.value = option.name
 
@@ -271,6 +276,12 @@ export class View {
 
   bindScoresButton(handler) {
     this.scoresButton.addEventListener('click', () => {
+      handler()
+    })
+  }
+
+  bindMuteButton(handler) {
+    this.muteButton.addEventListener('click', () => {
       handler()
     })
   }

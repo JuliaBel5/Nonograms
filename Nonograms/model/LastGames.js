@@ -1,17 +1,19 @@
+import { Music } from '../utils/Music'
 import { createElement } from '../utils/createElement'
-
+const button = 'button.mp3'
 export class LastGames {
   constructor(section) {
     this.list = JSON.parse(localStorage.getItem('lastGames')) ?? []
     this.overlay = null
     this.section = section
     this.isShown = false
+    this.audio = new Music()
   }
 
   create() {
     this.overlay = createElement('div', 'overlay')
     this.overlay.addEventListener('click', () => {})
-    this.section.append(this.overlay)
+
     this.table = createElement('div', 'modal')
     this.tableContent = createElement('div', 'modal-content')
     this.title = createElement('div', 'title', 'Last 5 Games:')
@@ -22,12 +24,12 @@ export class LastGames {
       'Return to the game',
     )
     this.tableButton.addEventListener('click', () => {
+      this.audio.play(button)
       this.remove()
     })
-
+    this.section.append(this.overlay, this.table)
     this.table.append(this.tableContent)
     this.tableContent.append(this.title, this.gameTable, this.tableButton)
-    this.section.append(this.table)
   }
 
   addItem(item) {
@@ -48,29 +50,32 @@ export class LastGames {
 
     // Create header row
     let header = this.gameTable.insertRow(-1)
-    let pictureHeader = header.insertCell(0)
-    let difficultyLevelHeader = header.insertCell(1)
-    let timeHeader = header.insertCell(2)
+    let positionHeader = header.insertCell(0)
+    let pictureHeader = header.insertCell(1)
+    pictureHeader.classList.add('tablePicture')
+    let difficultyLevelHeader = header.insertCell(2)
+    let timeHeader = header.insertCell(3)
+    timeHeader.classList.add('tableTime')
     pictureHeader.innerHTML = 'Picture'
     difficultyLevelHeader.innerHTML = 'Difficulty Level'
-    timeHeader.innerHTML = 'Time'
+    difficultyLevelHeader.classList.add('level')
+    positionHeader.textContent = 'Position'
+    timeHeader.textContent = 'Time'
 
     // Add data rows
     for (let i = 0; i < Math.min(this.list.length, 5); i++) {
       let row = this.gameTable.insertRow(-1)
-      let pictureCell = row.insertCell(0)
-      let difficultyLevelCell = row.insertCell(1)
-      let timeCell = row.insertCell(2)
-
+      let positionCell = row.insertCell(0)
+      let pictureCell = row.insertCell(1)
+      let difficultyLevelCell = row.insertCell(2)
+      let timeCell = row.insertCell(3)
+      positionCell.textContent = i + 1
       pictureCell.textContent = this.list[i][0]
 
       difficultyLevelCell.textContent = `${this.list[i][1]}x${this.list[i][1]}`
 
       timeCell.textContent = this.list[i][2]
     }
-
-    this.tableContent.append(this.gameTable)
-    console.log(this.gameTable)
   }
 
   save() {

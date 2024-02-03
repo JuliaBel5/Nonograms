@@ -25,12 +25,12 @@ const view = new View()
 const model = new Model()
 const app = new Controller(view, model)
 
-const mediaQuery900 = window.matchMedia('(min-width: 951px)')
+const mediaQuery900 = window.matchMedia('(min-width: 981px)')
 const mediaQuery768 = window.matchMedia(
-  '(min-width: 851px) and (max-width: 950px)',
+  '(min-width: 861px) and (max-width: 980px)',
 )
 const mediaQuery600 = window.matchMedia(
-  '(min-width: 650px) and (max-width: 850px)',
+  '(min-width: 650px) and (max-width: 860px)',
 )
 
 const mediaQuery550 = window.matchMedia(

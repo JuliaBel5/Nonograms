@@ -19,6 +19,8 @@ const size = 'size.wav'
 const picture = 'picture.wav'
 const reset = 'reset.wav'
 const random = 'random.wav'
+const scores = 'tada.mp3' //'scores.wav'
+const button = 'button.mp3'
 
 export class Controller {
   constructor(view, model) {
@@ -38,6 +40,7 @@ export class Controller {
     this.view.bindLoadGame(this.loadGame)
     this.view.bindPictureSelector(this.changePicture)
     this.view.bindScoresButton(this.scoresTable)
+    this.view.bindMuteButton(this.muteButton)
     this.view.bindNewGame(() => {
       this.audio.play(random)
       this.view.size = this.getRandomLevel([5, 10, 15])
@@ -47,6 +50,8 @@ export class Controller {
         pictures[this.view.size],
       )
       this.view.picture = this.view.randomChoice.value
+      this.view.levelPicture = this.view.randomChoice.name
+      this.view.square.style.backgroundImage = `url(${this.view.levelPicture}.png)`
       this.view.sizeSelector.value = this.view.size
       this.view.pictureSelector.value = this.view.randomChoice.name
       this.view.renderBoard()
@@ -65,16 +70,14 @@ export class Controller {
       state.counter === state.blackCount
     ) {
       console.log('you win')
-      this.result = [
-        this.view.levelPicture,
-        this.view.size,
-        this.view.timer.timer,
-      ]
+      const gameTime = this.view.timerWindow.textContent
+      this.result = [this.view.levelPicture, this.view.size, gameTime]
+
       this.table.addItem(this.result)
       this.audio.play(win)
       this.view.timer.stop()
       this.view.bindCheckWin(this.checkKey)
-      this.modal.showModal('You win', 'Congrats!')
+      this.modal.showModal('Congrats!', `You won in ${gameTime}`)
       state.isWin = true
     }
   }
@@ -89,7 +92,8 @@ export class Controller {
       pictures[this.view.size],
     )
     this.view.picture = this.view.randomChoice.value
-
+    this.view.levelPicture = this.view.randomChoice.name
+    this.view.square.style.backgroundImage = `url(${this.view.levelPicture}.png)`
     this.view.renderBoard()
     this.view.createPictureSelector()
     this.view.pictureSelector.value = this.view.randomChoice.name
@@ -98,6 +102,8 @@ export class Controller {
 
   changePicture = () => {
     this.audio.play(picture)
+    this.view.square.style.backgroundImage = `url(${this.view.levelPicture}.png)`
+
     this.stateReset()
   }
 
@@ -229,6 +235,12 @@ export class Controller {
   }
 
   scoresTable = () => {
+    this.audio.play(scores)
     this.table.showTable()
+  }
+
+  muteButton = () => {
+    this.audio.toggleMute()
+    this.view.muteButton.classList.toggle('active')
   }
 }

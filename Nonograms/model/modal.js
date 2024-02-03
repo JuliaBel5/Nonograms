@@ -1,11 +1,13 @@
 import { createElement } from '../utils/createElement'
-
+import { Music } from '../utils/Music'
+const button = 'button.mp3'
 export class Modal {
   constructor(section, model) {
     this.overlay = null
     this.section = section
     this.modal = null
     this.isShown = false
+    this.audio = new Music()
   }
 
   handleEnter = (event) => {
@@ -28,6 +30,7 @@ export class Modal {
       'Return to the game',
     )
     this.modalButton.addEventListener('click', () => {
+      this.audio.play(button)
       this.remove()
     })
 
