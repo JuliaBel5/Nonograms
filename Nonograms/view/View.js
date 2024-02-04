@@ -76,7 +76,7 @@ export class View {
     this.themeButton = createElement('div', `themeButton${state.theme}`)
     this.sizeSelector = createElement('select', `sizeSelector${state.theme}`)
     this.sizeSelector.id = 'sel1'
-    ;['5x5', '10x10', '15x15'].forEach((option, index) => {
+    ;['easy', 'medium', 'hard'].forEach((option, index) => {
       const optionElement = document.createElement('option')
       optionElement.textContent = option
       optionElement.classList.add(`option${index + 2}${state.theme}`)
@@ -255,7 +255,7 @@ export class View {
 
     pictures[this.size].forEach((option, index) => {
       const optionElement = document.createElement('option')
-      optionElement.classList.add(`option${index}`)
+      optionElement.classList.add(`option${index}${state.theme}`)
       optionElement.textContent = option.name
       optionElement.value = option.name
 

@@ -19,7 +19,7 @@ export function createGrid(game, picture, cellWidth, size) {
       div.style.height = `${cellWidth}px`
 
       if ((j + 1) % 5 === 0 && size >= 10 && j + 1 < size) {
-        div.style.borderRight = '2px solid blue' // Add border to the right of the div
+        div.style.borderRight = '3px  solid rgba(93, 33, 47, 0.9)' // Add border to the right of the div
         divider = true
       } else if (divider) {
         divider = false
@@ -27,9 +27,11 @@ export function createGrid(game, picture, cellWidth, size) {
 
       // Add horizontal divider after every 5 rows
       if ((i + 1) % 5 === 0 && size >= 10 && i + 1 < size) {
-        div.style.borderBottom = '2px solid blue' // Add border to the bottom of the div
+        div.style.borderBottom = '3px  solid rgba(93, 33, 47, 0.9)' // Add border to the bottom of the div
       }
-
+      if (j === row.length - 1 && i === picture.length - 1) {
+        div.style.borderBottomRightRadius = '10px'
+      }
       game.append(div)
       arr.push(div)
 

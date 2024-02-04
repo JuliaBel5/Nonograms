@@ -82,10 +82,13 @@ export function createRowClues(clues, cellWidth, coeff, size) {
       clueDiv.textContent = filteredClue.join('')
 
       if ((i + 1) % 5 === 0 && size >= 10 && i + 1 < size) {
-        clueDiv.style.borderRight = '2px solid green'
+        clueDiv.style.borderRight = '3px solid rgba(93, 33, 47, 0.9)'
         divider = true
       } else if (divider) {
         divider = false
+      }
+      if (i === clues.length - 1) {
+        clueDiv.style.borderTopRightRadius = '10px'
       }
       rowClueContainer.appendChild(clueDiv)
     }
@@ -108,7 +111,10 @@ export function createColumnClues(clues, cellWidth, coeff, size) {
       clueDiv.textContent = filteredClue.join(' ')
 
       if ((i + 1) % 5 === 0 && size >= 10 && i + 1 < size) {
-        clueDiv.style.borderBottom = '2px solid green'
+        clueDiv.style.borderBottom = '3px solid rgba(93, 33, 47, 0.9)'
+      }
+      if (i === clues.length - 1) {
+        clueDiv.style.borderBottomLeftRadius = '10px'
       }
       columnClueContainer.appendChild(clueDiv)
     }

@@ -1,3 +1,5 @@
+@import './variables';
+
 .gamearea {
   display: flex;
   gap: 10px;
@@ -13,7 +15,8 @@
   display: flex;
   flex-wrap: wrap;
   width: 300px;
-  border: 2px solid rgb(212, 146, 161);
+  border: 3px solid $pinkColor;
+  border-radius: 10px;
   box-sizing: content-box;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
 
@@ -23,10 +26,11 @@
   display: flex;
   flex-wrap: wrap;
   width: 300px;
-  border: 2px solid rgb(164, 159, 217);
+  border: 3px solid $lavender;
+  background: linear-gradient(to left, $blueContainerBackgroundStartColor, $blueContainerBackgroundEndColor);
   box-sizing: content-box;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
-
+  border-radius: 10px;
 }
 
 .iconsWrapper {
@@ -46,7 +50,7 @@
   align-items: center;
   width: fit-content;
   padding: 10px;
-  border: 2px solid rgb(212, 146, 161);
+  border: 2px solid $pinkColor;
   box-sizing: content-box;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -62,7 +66,8 @@
   align-items: center;
   width: fit-content;
   padding: 10px;
-  border: 2px solid rgb(164, 159, 217);
+  border: 2px solid $lavender;
+  background: linear-gradient(to left, $blueContainerBackgroundStartColor, $blueContainerBackgroundEndColor);
   box-sizing: content-box;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -104,6 +109,28 @@
   }
 }
 
+@media screen and (max-width: 520px) {
+
+
+  .buttonContainer0,
+  .buttonContainer1 {
+
+    justify-content: center;
+
+  }
+}
+
+@media screen and (max-width: 499px) {
+
+
+  .buttonContainer0,
+  .buttonContainer1 {
+
+    max-width: 350px;
+
+  }
+}
+
 
 .game {
   display: flex;
@@ -111,6 +138,7 @@
   width: 250px;
   border-bottom: 1px solid black;
   box-sizing: border-box;
+  border-bottom-right-radius: 10px;
 
 }
 
@@ -120,7 +148,7 @@
   border: 1px solid black;
   background-image: url(/favicon.png);
   background-size: cover;
-
+  border-top-left-radius: 10px;
 }
 
 .row {
@@ -130,7 +158,8 @@
   height: 50px;
   border-top: 1px solid black;
   border-bottom: 2px solid black;
-
+  border-top-right-radius: 10px;
+  font-weight: 500;
 }
 
 .column {
@@ -142,7 +171,8 @@
   border-left: 1px solid black;
   border-right: 2px solid black;
   box-sizing: border-box;
-
+  border-bottom-left-radius: 10px;
+  font-weight: 500;
 }
 
 .rowClue {
@@ -175,7 +205,7 @@
   width: 50px;
   height: 50px;
   text-align: center;
-  color: rgb(212, 146, 161);
+  color: $pinkColor;
   font-weight: 600;
   font-size: 2em;
   border-right: 1px solid black;
@@ -183,16 +213,21 @@
 }
 
 .cell.marked0 {
-  background-color: rgb(212, 146, 161);
+  background-color: $gridMarkedPink;
+  color: $gridCrossedPink;
   box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .cell.marked1 {
-  background-color: rgb(134, 182, 232);
-  color: rgb(134, 182, 232);
+  background-color: $gridMarkedBlue;
+  color: $gridCrossedBlue;
   box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
+.cell.crossedO {
+  color: $gridCrossedPink;
+}
+
 .cell.crossed1 {
-  color: rgb(95, 163, 236);
+  color: $gridCrossedBlue;
 }

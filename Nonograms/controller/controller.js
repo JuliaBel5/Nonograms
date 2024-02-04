@@ -75,7 +75,8 @@ export class Controller {
     ) {
       console.log('you win')
       const gameTime = this.view.timer.timer
-      this.result = [this.view.levelPicture, this.view.size, gameTime]
+      const gameScoresTime = this.view.timerWindow.textContent
+      this.result = [this.view.levelPicture, this.view.size, gameScoresTime]
 
       this.table.addItem(this.result)
       this.audio.play(win)

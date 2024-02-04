@@ -34,19 +34,19 @@ export class LastGames {
   }
 
   addItem(item) {
-    this.list.push(item)
+    this.list = JSON.parse(localStorage.getItem('lastGames')) ?? []
     if (this.list.length === 5) {
       this.list.shift()
     }
-    this.list.sort((a, b) => a[2] - b[2])
+    this.list.push(item)
     this.save()
   }
 
   updateTable() {
     console.log('list', this.list)
+    this.list.sort((a, b) => a[2] - b[2])
     this.gameTable.innerHTML = ''
 
-    // Create header row
     let header = this.gameTable.insertRow(-1)
     let positionHeader = header.insertCell(0)
     let pictureHeader = header.insertCell(1)
@@ -60,7 +60,6 @@ export class LastGames {
     positionHeader.textContent = 'Position'
     timeHeader.textContent = 'Time'
 
-    // Add data rows
     for (let i = 0; i < Math.min(this.list.length, 5); i++) {
       let row = this.gameTable.insertRow(-1)
       let positionCell = row.insertCell(0)
@@ -72,7 +71,7 @@ export class LastGames {
 
       difficultyLevelCell.textContent = `${this.list[i][1]}x${this.list[i][1]}`
 
-      timeCell.textContent = `${this.list[i][2]} sec`
+      timeCell.textContent = `${this.list[i][2]}`
     }
   }
 

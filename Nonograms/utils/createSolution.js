@@ -25,7 +25,9 @@ export function createSolution(game, picture, cellWidth, size) {
       if ((i + 1) % 5 === 0 && size >= 10 && i + 1 < size) {
         div.style.borderBottom = '2px solid blue' // Add border to the bottom of the div
       }
-
+      if (j === row.length - 1 && i === picture.length - 1) {
+        div.style.borderBottomRightRadius = '10px'
+      }
       game.append(div)
       arr.push(div)
     })

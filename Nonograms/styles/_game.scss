@@ -4,7 +4,7 @@
  @import './variables';
 
  a:hover {
-   background-color: rgba(188, 188, 246, 0.8);
+   background-color: $selectHover;
  }
 
  .saveButton0 {
@@ -38,7 +38,7 @@
    text-align: center;
    font-size: 32px;
    font-weight: 400;
-   color: $pinkColor;
+   color: $darkPinkColor;
  }
 
 
@@ -71,13 +71,13 @@
    cursor: pointer;
    background: url('mute.png');
    background-size: cover;
-   transition: all 0.5s ease;
+   transition: all 0.3s ease;
  }
 
  .muteButton:hover {
-   :hover {
-     border: 2px solid rgb(212, 146, 161);
-   }
+
+   transform: scale(1.1);
+
  }
 
  .muteButton.active {
@@ -92,11 +92,10 @@
    align-items: center;
    width: 50px;
    height: 50px;
-   border: 2px solid pink;
    text-align: center;
    border-radius: 10px;
    cursor: pointer;
-   background: url('snow.png');
+   background: url('blueFlower1.png');
    background-size: cover;
    transition: all 0.5s ease;
  }
@@ -104,7 +103,7 @@
 
  .themeButton0:hover {
 
-   border: 2px solid rgb(212, 146, 161);
+   transform: scale(1.1);
 
  }
 
@@ -115,7 +114,7 @@
    align-items: center;
    width: 50px;
    height: 50px;
-   border: 2px solid rgb(164, 159, 217);
+
    text-align: center;
    border-radius: 10px;
    cursor: pointer;
@@ -126,18 +125,23 @@
 
  .themeButton1:hover {
 
-   border: 2px solid rgb(133, 125, 221);
+   //border: 2px solid rgb(133, 125, 221);
+   transform: scale(1.1);
 
  }
 
  .sizeSelector0,
  .pictureSelector0 {
-   @include pinkSelector
+   @include pinkSelector;
+   width: 100px;
+   color: $modalMessagePink;
  }
 
  .sizeSelector1,
  .pictureSelector1 {
-   @include blueSelector
+   @include blueSelector;
+   width: 100px;
+   color: $blueColor;
  }
 
 
@@ -147,69 +151,70 @@
  }
 
  #sel1 select option:hover {
-   background-color: rgba(188, 188, 246, 0.8);
-   border: 2px solid rgb(185, 112, 129);
+   background-color: $selectHover;
+   border: 2px solid $selectBorder;
    color: #fff;
  }
 
  select option:checked {
-   background-color: rgba(188, 188, 246, 0.8);
-   border: 2px solid rgb(185, 112, 129);
+   background-color: $selectHover;
+   border: 2px solid $selectBorder;
    color: #fff;
  }
 
  ::selection {
-   background: rgba(188, 188, 246, 0.8);
+   background: $selectHover;
    color: #fff;
  }
 
+ .option00 {
+
+   background-color: $pinkSelectOption0;
+ }
 
  .option10 {
 
-   background-color: rgba(252, 215, 221, 0.8);
+   background-color: $pinkSelectOption1;
  }
 
  .option20 {
-   background-color: rgba(248, 219, 223, 0.8);
+   background-color: $pinkSelectOption2;
  }
 
  .option30 {
-   background-color: rgba(252, 196, 205, 0.8);
+   background-color: $pinkSelectOption3;
  }
 
  .option40 {
-   background-color: rgba(255, 198, 207, 0.8);
+   background-color: $pinkSelectOption4;
  }
 
  .option50 {
-   background-color: rgba(252, 180, 190, 0.8);
+   background-color: $pinkSelectOption5;
  }
 
- .option60 {
-   background-color: rgba(252, 175, 190, 0.8);
+
+
+ .option01 {
+   background-color: $blueSelectOption0;
  }
 
  .option11 {
-
-   background-color: rgba(202, 227, 242, 0.8);
+   background-color: $blueSelectOption1;
  }
 
  .option21 {
-   background-color: rgba(200, 220, 243, 0.80);
+   background-color: $blueSelectOption2;
  }
 
  .option31 {
-   background-color: rgba(198, 210, 244, 0.80);
+   background-color: $blueSelectOption3;
  }
 
  .option41 {
-   background-color: rgba(196, 200, 244, 0.80);
+   background-color: $blueSelectOption4;
  }
 
  .option51 {
-   background-color: rgba(192, 190, 245, 0.80);
- }
-
- .option61 {
-   background-color: rgba(188, 188, 246, 0.8);
+   background-color: $blueSelectOption5;
  }
