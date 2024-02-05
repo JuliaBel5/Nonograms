@@ -19,6 +19,7 @@
   border-radius: 10px;
   box-sizing: content-box;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to left, rgba(252, 215, 221, 0.4), rgba(250, 196, 205, 0.4));
 
 }
 
@@ -53,6 +54,7 @@
   border: 2px solid $pinkColor;
   box-sizing: content-box;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to left, rgba(252, 215, 221, 0.4), rgba(250, 196, 205, 0.4));
   border-radius: 10px;
 }
 
@@ -205,9 +207,13 @@
   width: 50px;
   height: 50px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: $pinkColor;
   font-weight: 600;
   font-size: 2em;
+  color: $modalMessagePink;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
 }
@@ -215,19 +221,39 @@
 .cell.marked0 {
   background-color: $gridMarkedPink;
   color: $gridCrossedPink;
+  text-align: center;
   box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .cell.marked1 {
   background-color: $gridMarkedBlue;
   color: $gridCrossedBlue;
+  text-align: center;
   box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .cell.crossedO {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: $gridCrossedPink;
+  text-align: center;
 }
 
 .cell.crossed1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: $gridCrossedBlue;
+  text-align: center;
+}
+
+@media screen and (max-width: 650px) {
+
+  .cell,
+  .cell.crossedO,
+  .cell.crossed1 {
+    font-size: 1.4em;
+    ;
+  }
 }

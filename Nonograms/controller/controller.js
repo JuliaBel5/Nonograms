@@ -32,7 +32,7 @@ export class Controller {
     this.audio = new Music()
     this.isMuted = false
     this.solutionIsShown = false
-    this.gameIsSaved = false
+    this.gameIsSaved = localStorage.getItem(`1savedPicture`) !== 'undefined'
     this.table = new LastGames(this.view.gameArea)
     this.model.createKey(this.view.picture)
     this.view.bindCheckWin(this.checkKey)
@@ -164,7 +164,7 @@ export class Controller {
     if (this.solutionIsShown) {
       return
     }
-    if (!key === 2) {
+    if (key === 1) {
       this.gameIsSaved = true
       this.audio.play(save)
     }
@@ -204,7 +204,8 @@ export class Controller {
   }
 
   loadGame = (key) => {
-    if (key !== 2 && !this.gameIsSaved) {
+    console.log(this.gameIsSaved, key)
+    if (!this.gameIsSaved && key === 1) {
       this.modal.showModal('Sorry,', `You should first save a game`)
       this.modal = new Modal(this.view.gameArea, this.model)
       return
