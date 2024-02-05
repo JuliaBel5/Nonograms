@@ -73,6 +73,8 @@ export class View {
     )
     this.scoresButton.classList.add('scoresButton')
     this.muteButton = createElement('div', 'muteButton')
+    // this.muteButton.style.backgroundImage = `url(mute${state.theme}.png)`
+    this.muteButton.classList.add(`mute${state.theme}`)
     this.themeButton = createElement('div', `themeButton${state.theme}`)
     this.sizeSelector = createElement('select', `sizeSelector${state.theme}`)
     this.sizeSelector.id = 'sel1'
@@ -292,12 +294,12 @@ export class View {
   }
   bindSaveGame(handler) {
     this.saveButton.addEventListener('click', () => {
-      handler()
+      handler(1)
     })
   }
   bindLoadGame(handler) {
     this.loadButton.addEventListener('click', () => {
-      handler()
+      handler(1)
     })
   }
 

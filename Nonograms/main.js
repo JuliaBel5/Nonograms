@@ -43,16 +43,22 @@ const mediaQuery500 = window.matchMedia('(max-width: 579px)')
 function handleScreenSizeChange(e) {
   if (mediaQuery900.matches) {
     state.cellWidth = 50
+    view.cellWidth = 50
   } else if (mediaQuery768.matches) {
     state.cellWidth = 44
+    view.cellWidth = 44
   } else if (mediaQuery600.matches) {
     state.cellWidth = 39
+    view.cellWidth = 39
   } else if (mediaQuery550.matches) {
     state.cellWidth = 35
+    view.cellWidth = 35
   } else if (mediaQuery500.matches) {
     state.cellWidth = 31
+    view.cellWidth = 31
   } else {
     state.cellWidth = 50
+    view.cellWidth = 50
   }
 
   view.resizeBoard(state.cellWidth)

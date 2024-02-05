@@ -28,6 +28,10 @@ export function createSolution(game, picture, cellWidth, size) {
       if (j === row.length - 1 && i === picture.length - 1) {
         div.style.borderBottomRightRadius = '10px'
       }
+
+      div.addEventListener('contextmenu', (e) => {
+        e.preventDefault()
+      })
       game.append(div)
       arr.push(div)
     })

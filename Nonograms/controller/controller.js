@@ -31,6 +31,8 @@ export class Controller {
     this.modal = new Modal(this.view.gameArea, this.model)
     this.audio = new Music()
     this.isMuted = false
+    this.solutionIsShown = false
+    this.gameIsSaved = false
     this.table = new LastGames(this.view.gameArea)
     this.model.createKey(this.view.picture)
     this.view.bindCheckWin(this.checkKey)
@@ -47,6 +49,7 @@ export class Controller {
   }
 
   newGame = () => {
+    this.solutionIsShown = false
     this.audio.play(random)
     this.view.size = this.getRandomLevel([5, 10, 15])
 
@@ -58,13 +61,13 @@ export class Controller {
     this.view.levelPicture = this.view.randomChoice.name
     this.view.square.style.backgroundImage = `url(${this.view.levelPicture}.png)`
     this.view.sizeSelector.value = this.view.size
-    this.view.pictureSelector.value = this.view.randomChoice.name
+    this.view.pictureSelector.value = this.view.levelPicture
     this.view.renderBoard()
     this.stateReset()
   }
 
   checkKey = () => {
-    if (!this.view.timer.intervalId) {
+    if (!this.view.timer.intervalId && !this.solutionIsShown) {
       this.view.timer.start()
     }
 
@@ -92,6 +95,7 @@ export class Controller {
   }
 
   changeSize = (value) => {
+    this.solutionIsShown = false
     this.audio.play(size)
     this.view.size = Number(value)
     this.view.cellWidth = state.cellWidth
@@ -108,6 +112,7 @@ export class Controller {
   }
 
   changePicture = () => {
+    this.solutionIsShown = false
     this.audio.play(picture)
     this.view.square.style.backgroundImage = `url(${this.view.levelPicture}.png)`
 
@@ -115,6 +120,8 @@ export class Controller {
   }
 
   stateReset = () => {
+    this.isSolutionShown = false
+    this.view.saveButton.classList.remove('disabled')
     this.view.resizeBoard(state.cellWidth)
     this.modal = new Modal(this.view.gameArea, this.model)
     this.model.key = 0
@@ -127,14 +134,17 @@ export class Controller {
   }
 
   resetGame = () => {
+    this.solutionIsShown = false
     this.audio.play(reset)
     this.view.renderBoard()
     this.stateReset()
+    this.view.pictureSelectorValue = this.view.levelPicture
+    this.view.sizeSelector.value = this.view.size
   }
 
   showSolution = () => {
+    console.log(state.cellWidth, this.view.cellWidth)
     this.audio.play(solution)
-    console.log(this.view.size === 15)
     this.view.renderBoard()
     this.stateReset()
 
@@ -146,10 +156,16 @@ export class Controller {
       this.view.size,
     )
     this.view.resizeBoard(this.view.cellWidth)
+    this.solutionIsShown = true
+    this.view.saveButton.classList.add('disabled')
   }
 
   saveGame = (key) => {
-    if (!key) {
+    if (this.solutionIsShown) {
+      return
+    }
+    if (!key === 2) {
+      this.gameIsSaved = true
       this.audio.play(save)
     }
     const savedGame = Array.from(this.view.game.children)
@@ -182,10 +198,19 @@ export class Controller {
       `${key}savedPictureName`,
       this.view.pictureSelector.value,
     )
+    if (this.view.loadButton.classList.contains('disabled')) {
+      this.view.loadButton.classList.remove('disabled')
+    }
   }
 
   loadGame = (key) => {
-    if (!key) {
+    if (key !== 2 && !this.gameIsSaved) {
+      this.modal.showModal('Sorry,', `You should first save a game`)
+      this.modal = new Modal(this.view.gameArea, this.model)
+      return
+    }
+    this.solutionIsShown = false
+    if (!key === 2) {
       this.audio.play(load)
     }
     const savedPicture = this.localStorage.getItem(`${key}savedPicture`)
@@ -299,5 +324,6 @@ export class Controller {
     this.view.bindThemeButton(this.themeButton)
     this.view.bindNewGame(this.newGame)
     this.loadGame(2)
+    this.view.timer.start()
   }
 }
