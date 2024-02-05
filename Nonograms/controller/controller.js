@@ -281,6 +281,13 @@ export class Controller {
     this.audio.play(button)
     this.audio.toggleMute()
     this.view.muteButton.classList.toggle('active')
+    state.isMuted
+    if (!state.isMuted) {
+      state.isMuted = true
+    } else {
+      state.isMuted = false
+    }
+    localStorage.setItem('julMuted', JSON.stringify(state.isMuted))
   }
 
   themeButton = () => {
@@ -293,6 +300,7 @@ export class Controller {
     } else {
       state.theme = 0
     }
+    localStorage.setItem('julTheme', JSON.stringify(state.theme))
     document.body.innerHTML = ''
     this.stateReset()
     this.view.init()

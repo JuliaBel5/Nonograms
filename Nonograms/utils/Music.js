@@ -1,5 +1,5 @@
 export class Music {
-  static isMuted = false
+  static isMuted = JSON.parse(localStorage.getItem('julMuted')) ?? false
 
   constructor() {
     this.audio = new Audio()

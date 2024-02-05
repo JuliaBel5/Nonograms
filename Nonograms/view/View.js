@@ -83,6 +83,9 @@ export class View {
     this.muteButton = createElement('div', 'muteButton')
     // this.muteButton.style.backgroundImage = `url(mute${state.theme}.png)`
     this.muteButton.classList.add(`mute${state.theme}`)
+    if (state.isMuted) {
+      this.muteButton.classList.toggle('active')
+    }
     this.themeButton = createElement('div', `themeButton${state.theme}`)
     this.sizeSelector = createElement('select', `sizeSelector${state.theme}`)
     this.sizeSelector.id = 'sel1'
@@ -309,14 +312,20 @@ export class View {
   }
   bindSaveGame(handler) {
     this.saveButton.addEventListener('click', () => {
-      this.audio.play(save)
       handler(1)
+
+      if (!this.saveButton.classList.contains('disabled')) {
+        this.audio.play(save)
+      }
     })
   }
   bindLoadGame(handler) {
     this.loadButton.addEventListener('click', () => {
-      this.audio.play(load)
       handler(1)
+      console.log(this.loadButton.classList.contains('disabled'))
+      if (!this.loadButton.classList.contains('disabled')) {
+        this.audio.play(load)
+      }
     })
   }
 

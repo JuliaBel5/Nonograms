@@ -14,12 +14,18 @@ import { View } from './view/View'
 import { Controller } from './controller/Controller'
 import { Model } from './model/Model'
 
+const theme = JSON.parse(localStorage.getItem('julTheme')) ?? 0
+const isMuted = JSON.parse(localStorage.getItem('julMuted')) ?? false
+if (theme === 1) {
+  document.body.classList.add('active')
+}
 export const state = {
   cellWidth: 50,
   counter: 0,
   blackCount: 0,
   isWin: false,
-  theme: 0,
+  theme,
+  isMuted,
 }
 
 const view = new View()

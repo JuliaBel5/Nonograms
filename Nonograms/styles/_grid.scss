@@ -141,6 +141,7 @@
   border-bottom: 1px solid black;
   box-sizing: border-box;
   border-bottom-right-radius: 10px;
+  user-select: none;
 
 }
 
@@ -162,6 +163,7 @@
   border-bottom: 2px solid black;
   border-top-right-radius: 10px;
   font-weight: 500;
+  cursor: default;
 }
 
 .column {
@@ -176,6 +178,7 @@
   border-bottom-left-radius: 10px;
   font-weight: 500;
   letter-spacing: 2px;
+  cursor: default;
 }
 
 .rowClue {
@@ -217,6 +220,7 @@
   color: $modalMessagePink;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
+  cursor: default;
 }
 
 .cell.marked0 {
@@ -239,6 +243,7 @@
   align-items: center;
   color: $gridCrossedPink;
   text-align: center;
+  cursor: default;
 }
 
 .cell.crossed1 {
@@ -247,6 +252,7 @@
   align-items: center;
   color: $gridCrossedBlue;
   text-align: center;
+  cursor: default;
 }
 
 @media screen and (max-width: 650px) {
