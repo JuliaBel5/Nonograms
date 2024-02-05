@@ -79,7 +79,12 @@ export class Controller {
       console.log('you win')
       const gameTime = this.view.timer.timer
       const gameScoresTime = this.view.timerWindow.textContent
-      this.result = [this.view.levelPicture, this.view.size, gameScoresTime]
+      this.result = [
+        this.view.levelPicture,
+        this.view.size,
+        gameTime,
+        gameScoresTime,
+      ]
 
       this.table.addItem(this.result)
       this.audio.play(win)
@@ -112,6 +117,7 @@ export class Controller {
     this.view.createPictureSelector()
     this.view.pictureSelector.value = this.view.randomChoice.name
     this.stateReset()
+    this.view.resizeBoard(state.cellWidth)
   }
 
   changePicture = () => {
@@ -120,6 +126,7 @@ export class Controller {
     this.view.square.style.backgroundImage = `url(${this.view.levelPicture}.png)`
 
     this.stateReset()
+    this.view.resizeBoard(state.cellWidth)
   }
 
   stateReset = () => {
@@ -216,7 +223,7 @@ export class Controller {
       markedCells,
       crossedCells,
     }
-    console.log(gameState)
+
     const savedGameState = JSON.stringify(gameState)
     this.localStorage.setItem(`${key}gameState`, savedGameState)
   }
@@ -338,7 +345,8 @@ export class Controller {
   }
 
   themeButton = () => {
-    const gameIsActive = this.view.timer.intervalId !== 'indefined'
+    const gameIsActive = this.view.timer.intervalId !== null
+
     this.audio.play(button)
     this.saveGame(2)
     if (!state.theme) {

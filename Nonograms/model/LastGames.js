@@ -45,6 +45,7 @@ export class LastGames {
   updateTable() {
     console.log('list', this.list)
     this.list.sort((a, b) => a[2] - b[2])
+    console.log('sorted list', this.list)
     this.gameTable.innerHTML = ''
 
     let header = this.gameTable.insertRow(-1)
@@ -71,7 +72,7 @@ export class LastGames {
 
       difficultyLevelCell.textContent = `${this.list[i][1]}x${this.list[i][1]}`
 
-      timeCell.textContent = `${this.list[i][2]}`
+      timeCell.textContent = `${this.list[i][3]}`
     }
   }
 
