@@ -20,7 +20,6 @@ export const state = {
   blackCount: 0,
   isWin: false,
   theme: 0,
-  saveKey: 2,
 }
 
 const view = new View()

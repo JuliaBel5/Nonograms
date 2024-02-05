@@ -32,7 +32,7 @@ export class Controller {
     this.audio = new Music()
     this.isMuted = false
     this.solutionIsShown = false
-    this.gameIsSaved = localStorage.getItem(`1savedPicture`) !== 'undefined'
+    //this.gameIsSaved = localStorage.getItem(`1gameState`) !== 'undefined'
     this.table = new LastGames(this.view.gameArea)
     this.model.createKey(this.view.picture)
     this.view.bindCheckWin(this.checkKey)
@@ -91,6 +91,9 @@ export class Controller {
          in ${gameTime} seconds`,
       )
       state.isWin = true
+      this.view.timer.saveToLocalStorage(3)
+      this.showSolution()
+      this.view.timer.getSavedTimer(3)
     }
   }
 
@@ -143,8 +146,7 @@ export class Controller {
   }
 
   showSolution = () => {
-    console.log(state.cellWidth, this.view.cellWidth)
-    this.audio.play(solution)
+    //  this.audio.play(solution)
     this.view.renderBoard()
     this.stateReset()
 
@@ -164,16 +166,16 @@ export class Controller {
     if (this.solutionIsShown) {
       return
     }
-    if (key === 1) {
-      this.gameIsSaved = true
+    /* if (key === 1) {
+      // this.gameIsSaved = true
       this.audio.play(save)
-    }
+    }*/
     const savedGame = Array.from(this.view.game.children)
-    this.localStorage.setItem(`${key}isMuted`, Music.isMuted)
+    /*   this.localStorage.setItem(`${key}isMuted`, Music.isMuted)
     this.localStorage.setItem(`${key}counter`, state.counter)
     this.localStorage.setItem(`${key}blackCount`, state.blackCount)
     this.localStorage.setItem(`${key}isWin`, state.isWin)
-    this.localStorage.setItem(`${key}size`, this.view.size)
+    this.localStorage.setItem(`${key}size`, this.view.size)*/
 
     this.view.timer.saveToLocalStorage(key)
     const markedCells = savedGame
@@ -183,7 +185,7 @@ export class Controller {
           : null
       })
       .filter(Boolean)
-    this.localStorage.setItem(`${key}markedCells`, markedCells)
+    //   this.localStorage.setItem(`${key}markedCells`, markedCells)
 
     const crossedCells = savedGame
       .map((cell, index) => {
@@ -192,39 +194,73 @@ export class Controller {
           : null
       })
       .filter(Boolean)
-    this.localStorage.setItem(`${key}crossedCells`, crossedCells)
+    /*  this.localStorage.setItem(`${key}crossedCells`, crossedCells)
     this.localStorage.setItem(`${key}savedPicture`, this.view.picture)
     this.localStorage.setItem(
       `${key}savedPictureName`,
       this.view.pictureSelector.value,
-    )
+    )*/
     if (this.view.loadButton.classList.contains('disabled')) {
       this.view.loadButton.classList.remove('disabled')
     }
+
+    const gameState = {
+      isMuted: Music.isMuted,
+      counter: state.counter,
+      blackCount: state.blackCount,
+      isWin: state.isWin,
+      size: this.view.size,
+      timer: this.view.timer.timer,
+      picture: this.view.picture,
+      pictureName: this.view.pictureSelector.value,
+      markedCells,
+      crossedCells,
+    }
+    console.log(gameState)
+    const savedGameState = JSON.stringify(gameState)
+    this.localStorage.setItem(`${key}gameState`, savedGameState)
   }
 
   loadGame = (key) => {
-    console.log(this.gameIsSaved, key)
-    if (!this.gameIsSaved && key === 1) {
+    /*  if (!this.gameIsSaved && key === 1) {
       this.modal.showModal('Sorry,', `You should first save a game`)
       this.modal = new Modal(this.view.gameArea, this.model)
       return
-    }
+    }*/
     this.solutionIsShown = false
-    if (!key === 2) {
+
+    /*if (key === 1) {
       this.audio.play(load)
-    }
-    const savedPicture = this.localStorage.getItem(`${key}savedPicture`)
-    if (key) {
-      const isMuted = this.localStorage.getItem(`${key}isMuted`)
-      if (isMuted) {
-        Music.isMuted = isMuted
-        if (Music.isMuted) {
-          this.view.muteButton.classList.add('active')
+    }*/
+    const savedGameState = this.localStorage.getItem(`${key}gameState`)
+    if (savedGameState) {
+      const gameState = JSON.parse(savedGameState)
+
+      this.view.size = gameState.size //
+      this.view.picture = gameState.picture //
+
+      this.view.sizeSelector.value = this.view.size
+      this.view.createPictureSelector()
+      this.view.pictureSelector.value = gameState.pictureName
+      this.view.levelPicture = gameState.pictureName
+      this.view.square.style.backgroundImage = `url(${this.view.levelPicture}.png)`
+      this.view.renderBoard()
+      this.stateReset()
+      state.isWin = gameState.isWin
+      state.counter = gameState.counter
+      state.blackCount = gameState.blackCount
+
+      if (key === 2) {
+        //const isMuted = this.localStorage.getItem(`${key}isMuted`)
+        const isMuted = gameState.isMuted
+        if (isMuted) {
+          Music.isMuted = isMuted
+          if (Music.isMuted) {
+            this.view.muteButton.classList.add('active')
+          }
         }
       }
-    }
-
+      /* const savedPicture = this.localStorage.getItem(`${key}savedPicture`)
     if (savedPicture) {
       this.view.picture = savedPicture
     }
@@ -241,11 +277,11 @@ export class Controller {
     if (savedPictureName) {
       this.view.pictureSelector.value = savedPictureName
       this.view.levelPicture = savedPictureName
-    }
-    this.view.square.style.backgroundImage = `url(${this.view.levelPicture}.png)`
-    this.view.renderBoard()
-    this.stateReset()
-    const savedCounter = this.localStorage.getItem(`${key}counter`)
+    }*/
+      /* this.view.square.style.backgroundImage = `url(${this.view.levelPicture}.png)`
+      this.view.renderBoard()
+      this.stateReset()*/
+      /*  const savedCounter = this.localStorage.getItem(`${key}counter`)
     if (savedCounter) {
       state.counter = savedCounter
     }
@@ -258,28 +294,31 @@ export class Controller {
     const savedIsWin = this.localStorage.getItem(`${key}isWin`)
     if (savedIsWin) {
       state.isWin = savedIsWin
-    }
-    const savedGame = Array.from(this.view.game.children)
+    }*/
+      const savedGame = Array.from(this.view.game.children)
 
-    const savedCrossedCells = this.localStorage.getItem(`${key}crossedCells`)
-    const savedMarkedCells = this.localStorage.getItem(`${key}markedCells`)
-    if (savedMarkedCells) {
+      // const savedCrossedCells = this.localStorage.getItem(`${key}crossedCells`)
+      //   const savedMarkedCells = this.localStorage.getItem(`${key}markedCells`)
+      const savedCrossedCells = gameState.crossedCells
+      const savedMarkedCells = gameState.markedCells
+      //   if (savedMarkedCells) {
       const markedCellIndices = savedMarkedCells
       markedCellIndices.forEach((index) => {
         savedGame[index].classList.add(`marked${state.theme}`)
         savedGame[index].textContent = ''
       })
-    }
-    if (savedCrossedCells) {
+      //   }
+      //   if (savedCrossedCells) {
       const crossedCellIndices = savedCrossedCells
       crossedCellIndices.forEach((index) => {
         savedGame[index].classList.add(`crossed${state.theme}`)
         savedGame[index].textContent = 'X'
       })
-    }
+      //   }
 
-    this.view.timer.reset()
-    this.view.timer.getSavedTimer(key)
+      this.view.timer.reset()
+      this.view.timer.getSavedTimer(key)
+    }
   }
 
   getRandomLevel(levels) {
@@ -299,6 +338,7 @@ export class Controller {
   }
 
   themeButton = () => {
+    const gameIsActive = this.view.timer.intervalId !== 'indefined'
     this.audio.play(button)
     this.saveGame(2)
     if (!state.theme) {
@@ -325,6 +365,8 @@ export class Controller {
     this.view.bindThemeButton(this.themeButton)
     this.view.bindNewGame(this.newGame)
     this.loadGame(2)
-    this.view.timer.start()
+    if (gameIsActive || state.blackCount > 0) {
+      this.view.timer.start()
+    }
   }
 }

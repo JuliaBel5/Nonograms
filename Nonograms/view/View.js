@@ -8,12 +8,16 @@ import { createGrid } from '../utils/createGrid'
 import { level5, level10, level15 } from '../model'
 import { state } from '../main'
 import { Timer } from '../utils/Timer'
+import { Music } from '../utils/Music'
 
 const pictures = {
   5: level5,
   10: level10,
   15: level15,
 }
+const load = 'load.mp3'
+const solution = 'solution.wav'
+const save = 'save.wav'
 
 export class View {
   constructor() {
@@ -26,6 +30,7 @@ export class View {
     this.init()
     this.gridEl = []
     this.timer = new Timer(this.timerWindow)
+    this.audio = new Music()
   }
 
   init() {
@@ -60,6 +65,9 @@ export class View {
       `firstButton${state.theme}`,
       'Load game',
     )
+    if (!localStorage.getItem(`1gameState`)) {
+      this.loadButton.classList.add('disabled')
+    }
     this.showSolutionButton = createElement(
       'div',
       `firstButton${state.theme}`,
@@ -138,6 +146,12 @@ export class View {
 
   bindCheckWin(handler) {
     this.game.addEventListener('click', () => {
+      handler()
+    })
+
+    this.game.addEventListener('contextmenu', (event) => {
+      event.preventDefault()
+
       handler()
     })
   }
@@ -289,16 +303,19 @@ export class View {
 
   bindShowSolution(handler) {
     this.showSolutionButton.addEventListener('click', () => {
+      this.audio.play(solution)
       handler()
     })
   }
   bindSaveGame(handler) {
     this.saveButton.addEventListener('click', () => {
+      this.audio.play(save)
       handler(1)
     })
   }
   bindLoadGame(handler) {
     this.loadButton.addEventListener('click', () => {
+      this.audio.play(load)
       handler(1)
     })
   }
