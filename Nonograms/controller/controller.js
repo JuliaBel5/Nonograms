@@ -76,7 +76,7 @@ export class Controller {
       state.counter === this.model.key &&
       state.counter === state.blackCount
     ) {
-      console.log('you win')
+      //    console.log('you win')
       const gameTime = this.view.timer.timer
       const gameScoresTime = this.view.timerWindow.textContent
       this.result = [
@@ -321,11 +321,13 @@ export class Controller {
     this.view.bindNewGame(this.newGame)
 
     this.loadGame(2)
-    if (gameIsActive || state.blackCount > 0) {
+    if (gameIsActive) {
       this.view.timer.start()
     }
+
     if (this.solutionIsShown) {
       this.showSolution()
+      this.view.timer.getSavedTimer(2)
     }
   }
 }

@@ -322,7 +322,6 @@ export class View {
   bindLoadGame(handler) {
     this.loadButton.addEventListener('click', () => {
       handler(1)
-      console.log(this.loadButton.classList.contains('disabled'))
       if (!this.loadButton.classList.contains('disabled')) {
         this.audio.play(load)
       }

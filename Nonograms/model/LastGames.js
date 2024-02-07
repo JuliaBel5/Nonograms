@@ -43,9 +43,7 @@ export class LastGames {
   }
 
   updateTable() {
-    console.log('list', this.list)
     this.list.sort((a, b) => a[2] - b[2])
-    console.log('sorted list', this.list)
     this.gameTable.innerHTML = ''
 
     let header = this.gameTable.insertRow(-1)
