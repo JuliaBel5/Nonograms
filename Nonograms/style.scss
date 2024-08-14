@@ -17,7 +17,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-image: url('pink.jpg');
+  background-image: url('/pink.jpg');
   background-size: cover;
 }
 
@@ -26,7 +26,7 @@ body.active {
 }
 
 body.active::before {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   top: 0;
@@ -35,7 +35,7 @@ body.active::before {
   height: 100%;
   z-index: -1;
 
-  background-image: url('blue3.jpg');
+  background-image: url('/blue3.jpg');
   background-size: cover;
 
   filter: brightness(50%);

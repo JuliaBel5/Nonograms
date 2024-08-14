@@ -13,7 +13,6 @@ import { createGrid } from './utils/createGrid'
 import { View } from './view/View'
 import { Controller } from './controller/controller'
 import { Model } from './model/Model'
-//add  a new line
 
 const theme = JSON.parse(localStorage.getItem('julTheme')) ?? 0
 const isMuted = JSON.parse(localStorage.getItem('julMuted')) ?? false

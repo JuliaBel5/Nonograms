@@ -17,7 +17,7 @@
   width: 400px;
   min-height: 300px;
   overflow: auto;
-  background-image: url('modal5.jpg');
+  background-image: url('/modal5.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   border: 2px solid $modalBorderPink;
@@ -39,7 +39,7 @@
   width: 400px;
   min-height: 300px;
   overflow: auto;
-  background-image: url('modalBlue.png');
+  background-image: url('/modalBlue.png');
   background-size: cover;
   background-repeat: no-repeat;
   border: 2px solid $modalBorderBlue;
@@ -59,7 +59,6 @@
   font-size: 24px;
   font-family: 'Montserrat', sans-serif;
   color: $modalTitlePink;
-  ;
   height: 20px;
 
   text-align: center;
@@ -80,7 +79,11 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 20px;
   font-weight: bold;
-  background: linear-gradient(to right, $modalButtonBackgroundStartColorPink, $modalButtonBackgroundEndColorPink);
+  background: linear-gradient(
+    to right,
+    $modalButtonBackgroundStartColorPink,
+    $modalButtonBackgroundEndColorPink
+  );
 
   color: $modalButtonTextColorPink;
   padding: 10px 20px;
@@ -94,7 +97,11 @@
 .modal-button0:hover {
   transform: scale(1.05);
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(to left, $modalButtonBackgroundStartColorPink, $modalButtonBackgroundEndColorPink);
+  background: linear-gradient(
+    to left,
+    $modalButtonBackgroundStartColorPink,
+    $modalButtonBackgroundEndColorPink
+  );
   color: $modalButtonTextColorHoverPink;
 }
 
@@ -103,7 +110,11 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 20px;
   font-weight: bold;
-  background: linear-gradient(to right, $modalButtonBackgroundStartColorBlue, $modalButtonBackgroundEndColorBlue);
+  background: linear-gradient(
+    to right,
+    $modalButtonBackgroundStartColorBlue,
+    $modalButtonBackgroundEndColorBlue
+  );
   color: $modalButtonTextColorBlue;
   padding: 10px 20px;
   border-radius: 10px;
@@ -116,7 +127,11 @@
 .modal-button1:hover {
   transform: scale(1.05);
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(to left, $modalButtonBackgroundStartColorBlue, $modalButtonBackgroundEndColorBlue);
+  background: linear-gradient(
+    to left,
+    $modalButtonBackgroundStartColorBlue,
+    $modalButtonBackgroundEndColorBlue
+  );
   color: $modalButtonTextColorHoverBlue;
 }
 
@@ -128,7 +143,6 @@
   height: 100%;
   background-color: $overlayColor;
   z-index: 1;
-
 }
 
 .table {
@@ -136,14 +150,11 @@
   font-family: 'Lobster', sans-serif;
 }
 
-
 .tableTime,
 .level,
 .tablePicture {
-
   padding-left: 5px;
   padding-right: 5px;
-
 }
 
 .tableTimeRow,
